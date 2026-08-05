@@ -9,13 +9,13 @@
     "lng": -58.3816
   },
   {
-      "country": "Brasil",
-      "flag": "🇧🇷",
-      "cities": ["Sao Paulo"],
-      "coords": "15.83° S · 47.92° W",
-      "count": 1,
-      "lat": -15.8267,
-      "lng": -47.9218
+    "country": "Brasil",
+    "flag": "🇧🇷",
+    "cities": ["Sao Paulo"],
+    "coords": "15.83° S · 47.92° W",
+    "count": 1,
+    "lat": -15.8267,
+    "lng": -47.9218
   },
   {
     "country": "Colombia",

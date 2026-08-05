@@ -1,7 +1,19 @@
 'use client';
 
-import { Suspense, useCallback, useMemo, useRef, useState } from 'react';
-import { Canvas, useFrame, type ThreeEvent } from '@react-three/fiber';
+import {
+  Suspense,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react';
+import {
+  Canvas,
+  useFrame,
+  useThree,
+  type ThreeEvent,
+} from '@react-three/fiber';
 import { Html, OrbitControls, useTexture } from '@react-three/drei';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import * as THREE from 'three';
@@ -182,6 +194,18 @@ function Marker({ location, hovered, onHover }: MarkerProps) {
   );
 }
 
+function ResponsiveScale({ children }: { children: ReactNode }) {
+  const sizeWidth = useThree((state) => state.size.width);
+  const sizeHeight = useThree((state) => state.size.height);
+  const viewportWidth = useThree((state) => state.viewport.width);
+  const scale = useMemo(() => {
+    if (sizeWidth < 768) return 0.55;
+    const maxByHeight = (1 - 144 / sizeHeight) * (2.61 / 2.28);
+    return Math.min(viewportWidth / 2.2, Math.max(0.4, maxByHeight));
+  }, [sizeWidth, sizeHeight, viewportWidth]);
+  return <group scale={scale}>{children}</group>;
+}
+
 interface EarthProps {
   scrollProgress: number;
   hovered: string | null;
@@ -272,12 +296,14 @@ export default function GlobeScene({
         <Suspense fallback={null}>
           <ambientLight intensity={1.35} />
           <directionalLight position={[5, 3, 5]} intensity={2.1} />
-          <Earth
-            scrollProgress={scrollProgress}
-            hovered={hovered}
-            onHover={handleHover}
-          />
-          <Atmosphere />
+          <ResponsiveScale>
+            <Earth
+              scrollProgress={scrollProgress}
+              hovered={hovered}
+              onHover={handleHover}
+            />
+            <Atmosphere />
+          </ResponsiveScale>
           <OrbitControls
             ref={controlsRef}
             enableZoom={false}

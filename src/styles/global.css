@@ -240,3 +240,13 @@
     will-change: opacity, transform;
   }
 }
+
+#team-map {
+  height: calc(42vh + var(--map-cards, 0vh) + 24vh);
+}
+
+@media (min-width: 768px) {
+  #team-map {
+    height: calc(100vh + var(--map-cards, 0vh) + 24vh);
+  }
+}
