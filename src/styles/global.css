@@ -233,11 +233,20 @@
     opacity: 1;
   }
 
-  .hero-stack {
-    opacity: calc(1 - var(--hero-scroll, 0) * 1.15);
-    transform: translate3d(0, calc(var(--hero-scroll, 0) * 56px), 0)
-      scale(calc(1 - var(--hero-scroll, 0) * 0.04));
-    will-change: opacity, transform;
+  @media (max-width: 1023px) {
+    .hero-stack > :first-child {
+      opacity: calc(1 - var(--hero-scroll, 0) * 1.15);
+      will-change: opacity;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-stack {
+      opacity: calc(1 - var(--hero-scroll, 0) * 1.15);
+      transform: translate3d(0, calc(var(--hero-scroll, 0) * 56px), 0)
+        scale(calc(1 - var(--hero-scroll, 0) * 0.04));
+      will-change: opacity, transform;
+    }
   }
 }
 
