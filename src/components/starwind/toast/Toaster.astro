@@ -1,0 +1,877 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+import ToastTemplate from "./ToastTemplate.astro";
+import { toastViewport } from "./variants";
+
+type Position =
+  | "top-left"
+  | "top-center"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-center"
+  | "bottom-right";
+
+type Props = HTMLAttributes<"div"> & {
+  position?: Position;
+  limit?: number;
+  gap?: string;
+  peek?: string;
+  duration?: number;
+};
+
+const {
+  class: className,
+  position = "bottom-right",
+  gap = "0.5rem",
+  peek = "1rem",
+  limit = 3,
+  duration = 5000,
+  ...rest
+} = Astro.props;
+---
+
+<div
+  class={toastViewport({ class: className })}
+  data-position={position}
+  data-limit={limit}
+  data-duration={duration}
+  role="region"
+  aria-live="polite"
+  aria-atomic="false"
+  aria-relevant="additions text"
+  aria-label="Notifications"
+  tabindex={-1}
+  style={`--gap: ${gap}; --peek: ${peek};`}
+  {...rest}
+  data-slot="toast-viewport"
+>
+  <slot>
+    <ToastTemplate variant="default" />
+    <ToastTemplate variant="success" />
+    <ToastTemplate variant="error" />
+    <ToastTemplate variant="warning" />
+    <ToastTemplate variant="info" />
+    <ToastTemplate variant="loading" />
+  </slot>
+</div>
+
+<style is:global>
+  .starwind-toast-viewport [data-slot="toast"] {
+    --scale: max(0.9, 1 - (var(--toast-index, 0) * 0.05));
+
+    z-index: calc(1000 - var(--toast-index, 0));
+    transform: translateX(var(--toast-swipe-movement-x, 0px))
+      translateY(calc(var(--toast-swipe-movement-y, 0px) - (var(--toast-index, 0) * var(--peek))))
+      scale(var(--scale));
+  }
+
+  .starwind-toast-viewport [data-slot="toast"][data-swiping] {
+    transition: none;
+  }
+
+  .starwind-toast-viewport [data-slot="toast"][data-expanded] {
+    --scale: 1;
+
+    transform: translateX(var(--toast-swipe-movement-x, 0px))
+      translateY(calc(var(--toast-swipe-movement-y, 0px) - var(--toast-offset-y, 0px)));
+  }
+
+  .starwind-toast-viewport [data-slot="toast"][data-state="closed"][data-swipe-direction="down"] {
+    transform: translateY(calc(var(--toast-swipe-movement-y, 0px) + 150%));
+    opacity: 0;
+  }
+
+  .starwind-toast-viewport [data-slot="toast"][data-state="closed"][data-swipe-direction="up"] {
+    transform: translateY(calc(var(--toast-swipe-movement-y, 0px) - 150%));
+    opacity: 0;
+  }
+
+  .starwind-toast-viewport [data-slot="toast"][data-state="closed"][data-swipe-direction="right"] {
+    transform: translateX(calc(var(--toast-swipe-movement-x, 0px) + 150%))
+      translateY(calc(var(--toast-offset-y, 0px) * -1));
+    opacity: 0;
+  }
+
+  .starwind-toast-viewport [data-slot="toast"][data-state="closed"][data-swipe-direction="left"] {
+    transform: translateX(calc(var(--toast-swipe-movement-x, 0px) - 150%))
+      translateY(calc(var(--toast-offset-y, 0px) * -1));
+    opacity: 0;
+  }
+
+  .starwind-toast-viewport[data-position^="top"] [data-slot="toast"] {
+    top: 0;
+    bottom: auto;
+    transform-origin: top center;
+    transform: translateX(var(--toast-swipe-movement-x, 0px))
+      translateY(calc(var(--toast-swipe-movement-y, 0px) + (var(--toast-index, 0) * var(--peek))))
+      scale(var(--scale));
+  }
+
+  .starwind-toast-viewport[data-position^="top"] [data-slot="toast"][data-expanded] {
+    transform: translateX(var(--toast-swipe-movement-x, 0px))
+      translateY(calc(var(--toast-swipe-movement-y, 0px) + var(--toast-offset-y, 0px)));
+  }
+
+  .starwind-toast-viewport[data-position^="top"]
+    [data-slot="toast"][data-state="closed"][data-swipe-direction="up"] {
+    transform: translateY(calc(var(--toast-swipe-movement-y, 0px) - 150%));
+  }
+
+  .starwind-toast-viewport[data-position^="top"]
+    [data-slot="toast"][data-state="closed"][data-swipe-direction="down"] {
+    transform: translateY(calc(var(--toast-swipe-movement-y, 0px) + 150%));
+  }
+
+  .starwind-toast-viewport[data-position^="top"]
+    [data-slot="toast"][data-state="closed"][data-swipe-direction="left"] {
+    transform: translateX(calc(var(--toast-swipe-movement-x, 0px) - 150%))
+      translateY(var(--toast-offset-y, 0px));
+    opacity: 0;
+  }
+
+  .starwind-toast-viewport[data-position^="top"]
+    [data-slot="toast"][data-state="closed"][data-swipe-direction="right"] {
+    transform: translateX(calc(var(--toast-swipe-movement-x, 0px) + 150%))
+      translateY(var(--toast-offset-y, 0px));
+    opacity: 0;
+  }
+
+  .starwind-toast-viewport [data-slot="toast"][data-starting-style] {
+    transform: translateY(150%);
+    opacity: 0;
+  }
+
+  .starwind-toast-viewport [data-slot="toast"][data-state="closed"]:not([data-swipe-direction]) {
+    transform: translateY(150%);
+    opacity: 0;
+  }
+
+  .starwind-toast-viewport[data-position^="top"] [data-slot="toast"][data-starting-style] {
+    transform: translateY(-150%);
+    opacity: 0;
+  }
+
+  .starwind-toast-viewport[data-position^="top"]
+    [data-slot="toast"][data-state="closed"]:not([data-swipe-direction]) {
+    transform: translateY(-150%);
+    opacity: 0;
+  }
+</style>
+
+<script>
+  type Variant = "default" | "success" | "error" | "warning" | "info" | "loading";
+
+  interface ToastOptions {
+    id?: string;
+    title?: string;
+    description?: string;
+    variant?: Variant;
+    duration?: number;
+    action?: {
+      label: string;
+      onClick: () => void;
+    };
+    onClose?: () => void;
+    onRemove?: () => void;
+  }
+
+  interface ToastState extends ToastOptions {
+    id: string;
+    element?: HTMLElement;
+    timeoutId?: number;
+    height?: number;
+    closing?: boolean;
+    swiping?: boolean;
+    swipeX?: number;
+    swipeY?: number;
+    swipeDirection?: "up" | "down" | "left" | "right";
+  }
+
+  const SWIPE_THRESHOLD = 40;
+  const DAMPING_FACTOR = 0.1;
+  const LONG_PRESS_DURATION = 300;
+
+  type SwipeDirection = "up" | "down" | "left" | "right";
+
+  class StarwindToastManager {
+    readonly viewport: HTMLElement;
+    private toasts: ToastState[] = [];
+    private queue: ToastState[] = [];
+    private limit: number;
+    private defaultDuration: number;
+    private expanded: boolean = false;
+    private expandedByTouch: boolean = false;
+    private counter: number = 0;
+    private swipeDirections: SwipeDirection[] = ["down", "right"];
+    private destroyed: boolean = false;
+
+    private activeSwipe: {
+      toast: ToastState;
+      startX: number;
+      startY: number;
+      startTime: number;
+      didMove: boolean;
+      lockedDirection: "horizontal" | "vertical" | null;
+    } | null = null;
+
+    private boundHandlers: {
+      mouseenter: () => void;
+      mouseleave: (e: MouseEvent) => void;
+      focusin: () => void;
+      focusout: (e: FocusEvent) => void;
+      documentMousemove: (e: MouseEvent) => void;
+      documentPointerdown: (e: PointerEvent) => void;
+    };
+
+    constructor(viewport: HTMLElement) {
+      this.viewport = viewport;
+      this.limit = Number(viewport.dataset.limit) || 3;
+      this.defaultDuration = Number(viewport.dataset.duration) || 5000;
+
+      const position = viewport.dataset.position || "bottom-right";
+      if (position.startsWith("top")) {
+        this.swipeDirections = ["up", "right"];
+      }
+
+      this.boundHandlers = {
+        mouseenter: this.handleMouseenter.bind(this),
+        mouseleave: this.handleMouseleave.bind(this),
+        focusin: this.handleFocusin.bind(this),
+        focusout: this.handleFocusout.bind(this),
+        documentMousemove: this.handleDocumentMousemove.bind(this),
+        documentPointerdown: this.handleDocumentPointerdown.bind(this),
+      };
+
+      this.setupEvents();
+    }
+
+    private handleMouseenter(): void {
+      this.expanded = true;
+      this.updateExpanded();
+      this.pauseAllTimers();
+    }
+
+    private handleMouseleave(e: MouseEvent): void {
+      if (this.expandedByTouch) return;
+
+      const rect = this.viewport.getBoundingClientRect();
+      const isStillInside =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+
+      if (!isStillInside) {
+        this.expanded = false;
+        this.updateExpanded();
+        this.resumeAllTimers();
+      }
+    }
+
+    private handleFocusin(): void {
+      this.expanded = true;
+      this.updateExpanded();
+      this.pauseAllTimers();
+    }
+
+    private handleFocusout(e: FocusEvent): void {
+      if (this.expandedByTouch) return;
+
+      const rect = this.viewport.getBoundingClientRect();
+      const mouseEvent = (window as any).__lastMousePosition;
+      const isMouseInside =
+        mouseEvent &&
+        mouseEvent.x >= rect.left &&
+        mouseEvent.x <= rect.right &&
+        mouseEvent.y >= rect.top &&
+        mouseEvent.y <= rect.bottom;
+
+      if (!this.viewport.contains(e.relatedTarget as Node) && !isMouseInside) {
+        this.expanded = false;
+        this.updateExpanded();
+        this.resumeAllTimers();
+      }
+    }
+
+    private handleDocumentMousemove(e: MouseEvent): void {
+      (window as any).__lastMousePosition = { x: e.clientX, y: e.clientY };
+    }
+
+    private handleDocumentPointerdown(e: PointerEvent): void {
+      if (!this.expandedByTouch || !this.expanded) return;
+
+      const target = e.target as HTMLElement;
+      if (!this.viewport.contains(target)) {
+        this.expandedByTouch = false;
+        this.expanded = false;
+        this.updateExpanded();
+        this.resumeAllTimers();
+      }
+    }
+
+    private setupEvents(): void {
+      this.viewport.addEventListener("mouseenter", this.boundHandlers.mouseenter);
+      this.viewport.addEventListener("mouseleave", this.boundHandlers.mouseleave);
+      this.viewport.addEventListener("focusin", this.boundHandlers.focusin);
+      this.viewport.addEventListener("focusout", this.boundHandlers.focusout);
+      document.addEventListener("mousemove", this.boundHandlers.documentMousemove);
+      document.addEventListener("pointerdown", this.boundHandlers.documentPointerdown);
+    }
+
+    private removeEvents(): void {
+      this.viewport.removeEventListener("mouseenter", this.boundHandlers.mouseenter);
+      this.viewport.removeEventListener("mouseleave", this.boundHandlers.mouseleave);
+      this.viewport.removeEventListener("focusin", this.boundHandlers.focusin);
+      this.viewport.removeEventListener("focusout", this.boundHandlers.focusout);
+      document.removeEventListener("mousemove", this.boundHandlers.documentMousemove);
+      document.removeEventListener("pointerdown", this.boundHandlers.documentPointerdown);
+    }
+
+    public destroy(): void {
+      if (this.destroyed) return;
+      this.destroyed = true;
+
+      this.toasts.forEach((toast) => {
+        if (toast.timeoutId) {
+          clearTimeout(toast.timeoutId);
+        }
+        toast.element?.remove();
+      });
+      this.toasts = [];
+      this.queue = [];
+
+      this.removeEvents();
+
+      this.activeSwipe = null;
+
+      if ((window as any).__starwind__?.toast === this) {
+        (window as any).__starwind__.toast = null;
+      }
+    }
+
+    private updateExpanded(): void {
+      if (this.expanded) {
+        this.viewport.setAttribute("data-expanded", "");
+        this.updateViewportHeight();
+      } else {
+        this.viewport.removeAttribute("data-expanded");
+        this.viewport.style.removeProperty("height");
+      }
+
+      this.toasts.forEach((toast) => {
+        if (toast.element) {
+          const contentEl = toast.element.querySelector('[data-slot="toast-content"]');
+          if (this.expanded) {
+            toast.element.setAttribute("data-expanded", "");
+            contentEl?.setAttribute("data-expanded", "");
+          } else {
+            toast.element.removeAttribute("data-expanded");
+            contentEl?.removeAttribute("data-expanded");
+          }
+        }
+      });
+      this.updatePositions();
+    }
+
+    private updateViewportHeight(): void {
+      if (!this.expanded || this.toasts.length === 0) return;
+
+      const gapValue = this.getCssPixelValue("--gap");
+      const visibleToasts = this.toasts.slice(0, this.limit);
+      const totalHeight = visibleToasts.reduce((sum, toast) => sum + (toast.height || 0), 0);
+      const totalGaps = (visibleToasts.length - 1) * gapValue;
+
+      this.viewport.style.height = `${totalHeight + totalGaps}px`;
+    }
+
+    private getCssPixelValue(property: string): number {
+      const value = getComputedStyle(this.viewport).getPropertyValue(property).trim();
+      if (!value) return 16;
+
+      const temp = document.createElement("div");
+      temp.style.position = "absolute";
+      temp.style.visibility = "hidden";
+      temp.style.width = value;
+      document.body.appendChild(temp);
+      const pixels = temp.offsetWidth;
+      document.body.removeChild(temp);
+      return pixels || 16;
+    }
+
+    private pauseAllTimers(): void {
+      this.toasts.forEach((toast) => {
+        if (toast.timeoutId) {
+          clearTimeout(toast.timeoutId);
+          toast.timeoutId = undefined;
+        }
+      });
+    }
+
+    private resumeAllTimers(): void {
+      this.toasts.forEach((toast) => {
+        const duration = toast.duration ?? this.defaultDuration;
+        if (duration > 0) {
+          toast.timeoutId = window.setTimeout(() => {
+            this.close(toast.id);
+          }, duration);
+        }
+      });
+    }
+
+    public add(options: ToastOptions): string {
+      const id = options.id || `toast-${++this.counter}`;
+      const duration = options.duration ?? this.defaultDuration;
+
+      const toastState: ToastState = {
+        ...options,
+        id,
+        duration,
+      };
+
+      this.renderToast(toastState);
+      this.toasts.unshift(toastState);
+
+      return id;
+    }
+
+    public update(id: string, options: Partial<ToastOptions>): void {
+      const toastIndex = this.toasts.findIndex((t) => t.id === id);
+      if (toastIndex === -1) return;
+
+      const toast = this.toasts[toastIndex];
+      const oldVariant = toast.variant;
+      Object.assign(toast, options);
+
+      if (options.variant && options.variant !== oldVariant && toast.element) {
+        this.rerenderToast(toast);
+      } else if (toast.element) {
+        this.updateToastContent(toast);
+      }
+
+      if (toast.element && (options.duration !== undefined || options.variant)) {
+        if (toast.timeoutId) {
+          clearTimeout(toast.timeoutId);
+          toast.timeoutId = undefined;
+        }
+        const duration = toast.duration ?? this.defaultDuration;
+        if (duration > 0 && !this.expanded) {
+          toast.timeoutId = window.setTimeout(() => {
+            this.close(toast.id);
+          }, duration);
+        }
+      }
+    }
+
+    public close(id: string): void {
+      const toast = this.toasts.find((t) => t.id === id);
+      if (!toast) return;
+
+      if (toast.closing) return;
+      toast.closing = true;
+
+      if (toast.timeoutId) {
+        clearTimeout(toast.timeoutId);
+        toast.timeoutId = undefined;
+      }
+
+      toast.onClose?.();
+
+      if (toast.element) {
+        toast.element.setAttribute("data-state", "closed");
+
+        setTimeout(() => {
+          toast.element?.remove();
+          toast.onRemove?.();
+
+          const currentIndex = this.toasts.findIndex((t) => t.id === id);
+          if (currentIndex !== -1) {
+            this.toasts.splice(currentIndex, 1);
+          }
+          this.updatePositions();
+        }, 200);
+      } else {
+        const index = this.toasts.findIndex((t) => t.id === id);
+        if (index !== -1) {
+          this.toasts.splice(index, 1);
+        }
+      }
+    }
+
+    public closeAll(): void {
+      [...this.toasts].forEach((toast) => this.close(toast.id));
+      this.queue = [];
+    }
+
+    private renderToast(toast: ToastState): void {
+      const variant = toast.variant || "default";
+      const template = this.viewport.querySelector(
+        `template[data-toast-template="${variant}"]`,
+      ) as HTMLTemplateElement;
+
+      if (!template) {
+        console.error(`Toast template for variant "${variant}" not found`);
+        return;
+      }
+
+      const clone = template.content.cloneNode(true) as DocumentFragment;
+      const element = clone.firstElementChild as HTMLElement;
+
+      if (!element) return;
+
+      element.setAttribute("data-toast-id", toast.id);
+      element.setAttribute("data-starting-style", "");
+
+      const titleEl = element.querySelector("[data-toast-title]");
+      const titleTextEl = element.querySelector("[data-toast-title-text]");
+      if (titleEl) {
+        if (toast.title) {
+          if (titleTextEl) titleTextEl.textContent = toast.title;
+        } else {
+          titleEl.remove();
+        }
+      }
+
+      const descEl = element.querySelector("[data-toast-description]");
+      if (descEl) {
+        if (toast.description) {
+          descEl.textContent = toast.description;
+        } else {
+          descEl.remove();
+        }
+      }
+
+      const closeBtn = element.querySelector('[data-slot="toast-close"]');
+      closeBtn?.addEventListener("click", () => this.close(toast.id));
+
+      this.setupSwipeHandlers(element, toast);
+
+      element.style.setProperty("--toast-swipe-movement-x", "0px");
+      element.style.setProperty("--toast-swipe-movement-y", "0px");
+
+      this.viewport.insertBefore(element, this.viewport.firstElementChild);
+      toast.element = element;
+
+      requestAnimationFrame(() => {
+        toast.height = element.offsetHeight;
+        this.updatePositions();
+
+        requestAnimationFrame(() => {
+          element.removeAttribute("data-starting-style");
+        });
+      });
+
+      const duration = toast.duration ?? this.defaultDuration;
+      if (duration > 0 && !this.expanded) {
+        toast.timeoutId = window.setTimeout(() => {
+          this.close(toast.id);
+        }, duration);
+      }
+    }
+
+    private updateToastContent(toast: ToastState): void {
+      if (!toast.element) return;
+
+      const titleEl = toast.element.querySelector("[data-toast-title]");
+      const descEl = toast.element.querySelector("[data-toast-description]");
+
+      if (titleEl && toast.title) {
+        const titleTextEl = titleEl.querySelector("[data-toast-title-text]");
+        if (titleTextEl) titleTextEl.textContent = toast.title;
+      }
+      if (descEl && toast.description) {
+        descEl.textContent = toast.description;
+      }
+    }
+
+    private rerenderToast(toast: ToastState): void {
+      if (!toast.element) return;
+
+      const variant = toast.variant || "default";
+      const template = this.viewport.querySelector(
+        `template[data-toast-template="${variant}"]`,
+      ) as HTMLTemplateElement;
+
+      if (!template) {
+        console.error(`Toast template for variant "${variant}" not found`);
+        return;
+      }
+
+      const clone = template.content.cloneNode(true) as DocumentFragment;
+      const newElement = clone.firstElementChild as HTMLElement;
+
+      if (!newElement) return;
+
+      newElement.setAttribute("data-toast-id", toast.id);
+      newElement.setAttribute("data-state", "open");
+      if (this.expanded) {
+        newElement.setAttribute("data-expanded", "");
+      }
+
+      const oldStyle = toast.element.style;
+      newElement.style.setProperty("--toast-index", oldStyle.getPropertyValue("--toast-index"));
+      newElement.style.setProperty(
+        "--toast-offset-y",
+        oldStyle.getPropertyValue("--toast-offset-y"),
+      );
+      newElement.style.setProperty("--toast-swipe-movement-x", "0px");
+      newElement.style.setProperty("--toast-swipe-movement-y", "0px");
+
+      const titleTextEl = newElement.querySelector("[data-toast-title-text]");
+      if (titleTextEl && toast.title) {
+        titleTextEl.textContent = toast.title;
+      }
+
+      const descEl = newElement.querySelector("[data-toast-description]");
+      if (descEl && toast.description) {
+        descEl.textContent = toast.description;
+      }
+
+      const closeBtn = newElement.querySelector('[data-slot="toast-close"]');
+      closeBtn?.addEventListener("click", () => this.close(toast.id));
+
+      this.setupSwipeHandlers(newElement, toast);
+
+      toast.element.replaceWith(newElement);
+      toast.element = newElement;
+
+      toast.height = newElement.offsetHeight;
+    }
+
+    private updatePositions(): void {
+      let cumulativeOffset = 0;
+
+      this.toasts.forEach((toast, index) => {
+        if (!toast.element) return;
+
+        const contentEl = toast.element.querySelector('[data-slot="toast-content"]');
+
+        toast.element.style.setProperty("--toast-index", String(index));
+        toast.element.style.setProperty("--toast-offset-y", `${cumulativeOffset}px`);
+
+        if (index > 0) {
+          contentEl?.setAttribute("data-behind", "");
+        } else {
+          contentEl?.removeAttribute("data-behind");
+        }
+
+        if (index >= this.limit) {
+          toast.element.setAttribute("data-limited", "");
+        } else {
+          toast.element.removeAttribute("data-limited");
+        }
+
+        const gapValue = this.getCssPixelValue("--gap");
+        cumulativeOffset += (toast.height || 0) + gapValue;
+      });
+    }
+
+    private handlePointerDown(e: PointerEvent, toast: ToastState): void {
+      if (e.button !== 0) return;
+
+      const target = e.target as HTMLElement;
+      const isInteractive = target.closest(
+        'button, a, input, textarea, [role="button"], [data-swipe-ignore]',
+      );
+      if (isInteractive) return;
+
+      this.expandedByTouch = true;
+      if (!this.expanded) {
+        this.expanded = true;
+        this.updateExpanded();
+        this.pauseAllTimers();
+      }
+
+      this.activeSwipe = {
+        toast,
+        startX: e.clientX,
+        startY: e.clientY,
+        startTime: Date.now(),
+        didMove: false,
+        lockedDirection: null,
+      };
+
+      toast.swiping = true;
+      toast.swipeX = 0;
+      toast.swipeY = 0;
+      toast.element?.setAttribute("data-swiping", "");
+      toast.element?.setPointerCapture(e.pointerId);
+
+      if (toast.timeoutId) {
+        clearTimeout(toast.timeoutId);
+        toast.timeoutId = undefined;
+      }
+    }
+
+    private handlePointerMove(e: PointerEvent): void {
+      if (!this.activeSwipe) return;
+
+      e.preventDefault();
+
+      const { toast, startX, startY } = this.activeSwipe;
+      const deltaX = e.clientX - startX;
+      const deltaY = e.clientY - startY;
+
+      if (!this.activeSwipe.lockedDirection) {
+        const absX = Math.abs(deltaX);
+        const absY = Math.abs(deltaY);
+        if (absX > 5 || absY > 5) {
+          this.activeSwipe.didMove = true;
+          const hasHorizontal =
+            this.swipeDirections.includes("left") || this.swipeDirections.includes("right");
+          const hasVertical =
+            this.swipeDirections.includes("up") || this.swipeDirections.includes("down");
+          if (hasHorizontal && hasVertical) {
+            this.activeSwipe.lockedDirection = absX > absY ? "horizontal" : "vertical";
+          } else if (hasHorizontal) {
+            this.activeSwipe.lockedDirection = "horizontal";
+          } else {
+            this.activeSwipe.lockedDirection = "vertical";
+          }
+        }
+      }
+
+      let swipeX = 0;
+      let swipeY = 0;
+
+      if (this.activeSwipe.lockedDirection === "horizontal") {
+        if (this.swipeDirections.includes("right") && deltaX > 0) {
+          swipeX = deltaX;
+        } else if (this.swipeDirections.includes("left") && deltaX < 0) {
+          swipeX = deltaX;
+        } else {
+          swipeX = deltaX * DAMPING_FACTOR;
+        }
+      } else if (this.activeSwipe.lockedDirection === "vertical") {
+        if (this.swipeDirections.includes("down") && deltaY > 0) {
+          swipeY = deltaY;
+        } else if (this.swipeDirections.includes("up") && deltaY < 0) {
+          swipeY = deltaY;
+        } else {
+          swipeY = deltaY * DAMPING_FACTOR;
+        }
+      }
+
+      toast.swipeX = swipeX;
+      toast.swipeY = swipeY;
+      toast.element?.style.setProperty("--toast-swipe-movement-x", `${swipeX}px`);
+      toast.element?.style.setProperty("--toast-swipe-movement-y", `${swipeY}px`);
+    }
+
+    private handlePointerUp(e: PointerEvent): void {
+      if (!this.activeSwipe) return;
+
+      const { toast } = this.activeSwipe;
+      toast.element?.releasePointerCapture(e.pointerId);
+      toast.element?.removeAttribute("data-swiping");
+      toast.swiping = false;
+
+      const swipeX = toast.swipeX || 0;
+      const swipeY = toast.swipeY || 0;
+
+      let shouldClose = false;
+      let direction: SwipeDirection | undefined;
+      const lockedDir = this.activeSwipe.lockedDirection;
+
+      if (lockedDir === "horizontal") {
+        if (swipeX > SWIPE_THRESHOLD && this.swipeDirections.includes("right")) {
+          shouldClose = true;
+          direction = "right";
+        } else if (swipeX < -SWIPE_THRESHOLD && this.swipeDirections.includes("left")) {
+          shouldClose = true;
+          direction = "left";
+        }
+      } else if (lockedDir === "vertical") {
+        if (swipeY > SWIPE_THRESHOLD && this.swipeDirections.includes("down")) {
+          shouldClose = true;
+          direction = "down";
+        } else if (swipeY < -SWIPE_THRESHOLD && this.swipeDirections.includes("up")) {
+          shouldClose = true;
+          direction = "up";
+        }
+      }
+
+      const pressDuration = Date.now() - this.activeSwipe.startTime;
+      const isLongPress = pressDuration >= LONG_PRESS_DURATION;
+      const didMove = this.activeSwipe.didMove;
+
+      const rect = this.viewport.getBoundingClientRect();
+      const isOutsideViewport =
+        e.clientX < rect.left ||
+        e.clientX > rect.right ||
+        e.clientY < rect.top ||
+        e.clientY > rect.bottom;
+
+      if (shouldClose && direction) {
+        toast.swipeDirection = direction;
+        toast.element?.setAttribute("data-swipe-direction", direction);
+        this.close(toast.id);
+      } else {
+        toast.swipeX = 0;
+        toast.swipeY = 0;
+        toast.element?.style.setProperty("--toast-swipe-movement-x", "0px");
+        toast.element?.style.setProperty("--toast-swipe-movement-y", "0px");
+
+        if ((!isLongPress && !didMove && this.expandedByTouch) || isOutsideViewport) {
+          this.expandedByTouch = false;
+          this.expanded = false;
+          this.updateExpanded();
+          this.resumeAllTimers();
+        } else {
+          const duration = toast.duration ?? this.defaultDuration;
+          if (duration > 0 && !this.expanded) {
+            toast.timeoutId = window.setTimeout(() => {
+              this.close(toast.id);
+            }, duration);
+          }
+        }
+      }
+
+      this.activeSwipe = null;
+    }
+
+    private setupSwipeHandlers(element: HTMLElement, toast: ToastState): void {
+      element.addEventListener("pointerdown", (e) => this.handlePointerDown(e, toast));
+      element.addEventListener("pointermove", (e) => this.handlePointerMove(e));
+      element.addEventListener("pointerup", (e) => this.handlePointerUp(e));
+      element.addEventListener("pointercancel", (e) => this.handlePointerUp(e));
+
+      element.addEventListener(
+        "touchmove",
+        (e) => {
+          if (this.activeSwipe?.toast === toast) {
+            e.preventDefault();
+          }
+        },
+        { passive: false },
+      );
+    }
+  }
+
+  (window as any).__starwind__ = (window as any).__starwind__ || {};
+
+  let currentManager: StarwindToastManager | null = null;
+
+  const setupToasts = () => {
+    const viewport = document.querySelector(".starwind-toast-viewport") as HTMLElement | null;
+
+    if (!viewport) {
+      currentManager?.destroy();
+      currentManager = null;
+      return;
+    }
+
+    if (currentManager && currentManager.viewport === viewport) {
+      return;
+    }
+
+    currentManager?.destroy();
+
+    currentManager = new StarwindToastManager(viewport);
+    (window as any).__starwind__.toast = currentManager;
+  };
+
+  setupToasts();
+  document.addEventListener("astro:after-swap", setupToasts);
+  document.addEventListener("starwind:init", setupToasts);
+</script>

@@ -1,0 +1,20 @@
+[
+  { "name": "Astro", "icon": "astro/astro-original" },
+  { "name": "Bun", "icon": "bun/bun-original" },
+  { "name": "Cloudflare", "icon": "cloudflare/cloudflare-original" },
+  { "name": "Expo", "icon": "expo/expo-original" },
+  { "name": "Git", "icon": "git/git-original" },
+  { "name": "Go", "icon": "go/go-original" },
+  { "name": "JavaScript", "icon": "javascript/javascript-original" },
+  { "name": "Linux", "icon": "linux/linux-original" },
+  { "name": "Next.js", "icon": "nextjs/nextjs-original" },
+  { "name": "Nix", "icon": "nixos/nixos-original" },
+  { "name": "Node.js", "icon": "nodejs/nodejs-original" },
+  { "name": "PostgreSQL", "icon": "postgresql/postgresql-original" },
+  { "name": "React", "icon": "react/react-original" },
+  { "name": "Rust", "icon": "rust/rust-original" },
+  { "name": "Tailwind CSS", "icon": "tailwindcss/tailwindcss-original" },
+  { "name": "Three.js", "icon": "threejs/threejs-original" },
+  { "name": "TypeScript", "icon": "typescript/typescript-original" },
+  { "name": "Vite", "icon": "vite/vite-original" }
+]

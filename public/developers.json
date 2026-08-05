@@ -1,0 +1,98 @@
+[
+  {
+    "id": "nnachonesa",
+    "name": "Nacho",
+    "role": "Full-stack",
+    "country": "Argentina",
+    "flag": "🇦🇷",
+    "contact": {
+      "type": "github",
+      "label": "@nnachonesa",
+      "url": "https://github.com/nnachonesa"
+    }
+  },
+  {
+    "id": "jesus-ale43",
+    "name": "Jesús Alejandro",
+    "role": "Full-stack",
+    "country": "Brasil",
+    "flag": "🇧🇷",
+    "contact": {
+      "type": "telegram",
+      "label": "@jesus-ale43",
+      "url": "https://t.me/jesus-ale43"
+    }
+  },
+  {
+    "id": "fatandtired",
+    "name": "Fabio Arenas",
+    "role": "Full-stack",
+    "country": "Colombia",
+    "flag": "🇨🇴",
+    "contact": {
+      "type": "github",
+      "label": "@fatandtired",
+      "url": "http://github.com/fatandtired"
+    }
+  },
+  {
+    "id": "hyduez",
+    "name": "Paulo Viteri",
+    "role": "Full-stack",
+    "country": "Ecuador",
+    "flag": "🇪🇨",
+    "contact": {
+      "type": "whatsapp",
+      "label": "@hy1dll",
+      "url": "http://wa.me/@hy1dll"
+    }
+  },
+  {
+    "id": "v1ctorio",
+    "name": "Victorio Medina",
+    "role": "Full-stack",
+    "country": "España",
+    "flag": "🇪🇸",
+    "contact": {
+      "type": "github",
+      "label": "@v1ctorio",
+      "url": "https://github.com/v1ctorio"
+    }
+  },
+  {
+    "id": "shikr",
+    "name": "Cristobal Rodriguez",
+    "role": "Full-stack",
+    "country": "México",
+    "flag": "🇲🇽",
+    "contact": {
+      "type": "github",
+      "label": "@shikr",
+      "url": "http://github.com/shikr"
+    }
+  },
+  {
+    "id": "dexslender",
+    "name": "Eduardo Javier",
+    "role": "Full-stack",
+    "country": "México",
+    "flag": "🇲🇽",
+    "contact": {
+      "type": "instagram",
+      "label": "@dexsexo",
+      "url": "http://instagram.com/@dexsexo"
+    }
+  },
+  {
+    "id": "lurbinaa",
+    "name": "Leonardo Urbina",
+    "role": "Back-end",
+    "country": "Perú",
+    "flag": "🇵🇪",
+    "contact": {
+      "type": "protonmail",
+      "label": "lurbinaa@proton.me",
+      "url": "mailto:lurbinaa@proton.me"
+    }
+  }
+]

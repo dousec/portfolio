@@ -1,0 +1,344 @@
+---
+import {
+    Dropdown,
+    DropdownTrigger,
+    DropdownContent,
+    DropdownLabel,
+    DropdownItem,
+    DropdownSeparator,
+} from "./starwind/dropdown";
+import { Avatar, AvatarImage, AvatarFallback } from "./starwind/avatar";
+
+import { developers } from "@lib/developers";
+
+import Socials from "@data/socials.json";
+
+const simpleicon = (slug: string) =>
+    `https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${slug}.svg`;
+
+const services = [
+    { label: "Web development", href: "#contact" },
+    { label: "Design systems", href: "#contact" },
+    { label: "3D & WebGL", href: "#contact" },
+    { label: "Backend & APIs", href: "#contact" },
+    { label: "Dev consulting", href: "#contact" },
+];
+
+const initials = (name: string) =>
+    name
+        .split(" ")
+        .map((w) => w[0])
+        .slice(0, 2)
+        .join("")
+        .toUpperCase();
+
+const isExternal = (url: string) => /^https?:\/\//.test(url);
+
+const languages = [
+    { code: "en", label: "English", flag: "🇺🇸", href: "/" },
+    { code: "es", label: "Español", flag: "🇪🇸", href: "/es/" },
+];
+
+const currentLocale = Astro.currentLocale ?? "en";
+const currentLanguage =
+    languages.find((l) => l.code === currentLocale) ?? languages[0];
+---
+
+<header
+    class="fixed inset-x-0 top-0 z-50 border-b border-zinc-200/70 bg-white/85 backdrop-blur-md"
+>
+    <nav
+        class="mx-auto grid h-16 max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-5 sm:px-8"
+        aria-label="Main"
+    >
+        <div class="hidden items-center gap-1 sm:flex">
+            {
+                Socials.map((s) => (
+                    <a
+                        href={s.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={s.label}
+                        class="flex h-9 w-9 items-center justify-center rounded-full text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-900"
+                    >
+                        <img
+                            src={simpleicon(s.icon)}
+                            alt=""
+                            class="h-4 w-4 brightness-0 opacity-[0.55] transition-opacity duration-200 group-hover:opacity-100"
+                            width="24"
+                            height="24"
+                            loading="lazy"
+                        />
+                    </a>
+                ))
+            }
+        </div>
+
+        <a
+            href="#top"
+            class="justify-self-center font-display text-[1.7rem] leading-none tracking-tight text-zinc-900 transition hover:opacity-70"
+        >
+            Dou
+        </a>
+
+        <div class="flex items-center justify-self-end gap-0.5 sm:gap-2">
+            <Dropdown openOnHover={true} closeDelay={150}>
+                <DropdownTrigger
+                    class="inline-flex items-center gap-1 rounded-full px-2 py-1.5 text-sm font-medium text-zinc-600 transition hover:bg-zinc-100 hover:text-zinc-900 focus-visible:ring-2 sm:px-3"
+                >
+                    Developers
+                    <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="m6 9 6 6 6-6"></path>
+                    </svg>
+                </DropdownTrigger>
+                <DropdownContent
+                    align="end"
+                    sideOffset={10}
+                    class="min-w-72 rounded-xl p-1.5 shadow-lg shadow-zinc-900/5"
+                >
+                    <DropdownLabel
+                        class="px-2 pt-1.5 pb-1 font-mono text-[10px] uppercase tracking-[0.2em]"
+                    >
+                        Developers · tap to talk
+                    </DropdownLabel>
+                    {
+                        developers.map((d) => (
+                            <DropdownItem
+                                as="a"
+                                href={d.contact.url}
+                                target={
+                                    isExternal(d.contact.url)
+                                        ? "_blank"
+                                        : undefined
+                                }
+                                rel={
+                                    isExternal(d.contact.url)
+                                        ? "noreferrer"
+                                        : undefined
+                                }
+                                title={d.contact.label}
+                                class="group/item flex items-center gap-3 rounded-lg px-2 py-2 text-sm text-zinc-700 hover:text-zinc-900"
+                            >
+                                <Avatar
+                                    size="sm"
+                                    class="h-8 w-8 shrink-0 border-zinc-200"
+                                >
+                                    <AvatarImage
+                                        src={`https://github.com/${d.id}.png`}
+                                        alt={`${d.name} avatar`}
+                                    />
+                                    <AvatarFallback class="bg-zinc-100 text-[10px] font-semibold text-zinc-600">
+                                        {initials(d.name)}
+                                    </AvatarFallback>
+                                </Avatar>
+                                <span class="flex min-w-0 flex-1 flex-col">
+                                    <span class="flex items-center gap-1.5 font-medium text-zinc-800">
+                                        <span class="truncate">{d.name}</span>
+                                        <span
+                                            class="text-sm leading-none"
+                                            aria-hidden="true"
+                                        >
+                                            {d.flag}
+                                        </span>
+                                    </span>
+                                    <span class="truncate font-mono text-[10px] uppercase tracking-[0.15em] text-zinc-400">
+                                        {d.role} · {d.country}
+                                    </span>
+                                </span>
+                                <img
+                                    src={simpleicon(d.contact.type)}
+                                    alt={d.contact.type}
+                                    class="h-4 w-4 shrink-0 opacity-60 transition-opacity group-hover/item:opacity-100"
+                                    width="24"
+                                    height="24"
+                                    loading="lazy"
+                                />
+                            </DropdownItem>
+                        ))
+                    }
+                    <DropdownSeparator />
+                    <DropdownItem
+                        as="a"
+                        href="#team-map"
+                        class="rounded-lg px-2 py-2 text-sm font-medium text-zinc-900 hover:text-zinc-900"
+                    >
+                        All developers
+                    </DropdownItem>
+                </DropdownContent>
+            </Dropdown>
+
+            <Dropdown openOnHover={true} closeDelay={150}>
+                <DropdownTrigger
+                    class="inline-flex items-center gap-1 rounded-full px-2 py-1.5 text-sm font-medium text-zinc-600 transition hover:bg-zinc-100 hover:text-zinc-900 focus-visible:ring-2 sm:px-3"
+                >
+                    Services
+                    <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="m6 9 6 6 6-6"></path>
+                    </svg>
+                </DropdownTrigger>
+                <DropdownContent
+                    align="end"
+                    sideOffset={10}
+                    class="min-w-56 rounded-xl p-1.5 shadow-lg shadow-zinc-900/5"
+                >
+                    <DropdownLabel
+                        class="px-2 pt-1.5 pb-1 font-mono text-[10px] uppercase tracking-[0.2em]"
+                    >
+                        Services
+                    </DropdownLabel>
+                    {
+                        services.map((s) => (
+                            <DropdownItem
+                                as="a"
+                                href={s.href}
+                                class="flex items-center justify-between gap-6 rounded-lg px-2 py-2 text-sm text-zinc-700 hover:text-zinc-900"
+                            >
+                                {s.label}
+                                <svg
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="text-zinc-400"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M7 17 17 7m0 0H7m10 0v10" />
+                                </svg>
+                            </DropdownItem>
+                        ))
+                    }
+                    <DropdownSeparator />
+                    <DropdownItem
+                        as="a"
+                        href="#contact"
+                        class="rounded-lg px-2 py-2 text-sm font-medium text-zinc-900 hover:text-zinc-900"
+                    >
+                        Get in touch
+                    </DropdownItem>
+                </DropdownContent>
+            </Dropdown>
+
+            <Dropdown openOnHover={true} closeDelay={150}>
+                <DropdownTrigger
+                    aria-label={`Language: ${currentLanguage.label}`}
+                    class="inline-flex items-center gap-1 rounded-full px-2 py-1.5 text-sm font-medium text-zinc-600 transition hover:bg-zinc-100 hover:text-zinc-900 focus-visible:ring-2 sm:px-3"
+                >
+                    <span aria-hidden="true">{currentLanguage.flag}</span>
+                    <span class="hidden sm:inline">
+                        {currentLanguage.label}
+                    </span>
+                    <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="m6 9 6 6 6-6"></path>
+                    </svg>
+                </DropdownTrigger>
+                <DropdownContent
+                    align="end"
+                    sideOffset={10}
+                    class="min-w-44 rounded-xl p-1.5 shadow-lg shadow-zinc-900/5"
+                >
+                    <DropdownLabel
+                        class="px-2 pt-1.5 pb-1 font-mono text-[10px] uppercase tracking-[0.2em]"
+                    >
+                        Language · Idioma
+                    </DropdownLabel>
+                    {
+                        languages.map((l) => (
+                            <DropdownItem
+                                as="a"
+                                href={l.href}
+                                aria-current={
+                                    l.code === currentLocale
+                                        ? "page"
+                                        : undefined
+                                }
+                                class="flex items-center justify-between gap-6 rounded-lg px-2 py-2 text-sm text-zinc-700 hover:text-zinc-900"
+                            >
+                                <span class="flex items-center gap-2">
+                                    <span aria-hidden="true">{l.flag}</span>
+                                    {l.label}
+                                </span>
+                                {l.code === currentLocale && (
+                                    <svg
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="text-zinc-900"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="M20 6 9 17l-5-5" />
+                                    </svg>
+                                )}
+                            </DropdownItem>
+                        ))
+                    }
+                </DropdownContent>
+            </Dropdown>
+
+            <a
+                href="mailto:hello@dousec.org"
+                class="flex h-9 w-9 items-center justify-center rounded-full text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-900 sm:hidden"
+                aria-label="Email"
+            >
+                <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+            </a>
+            <a
+                href="#contact"
+                class="hidden rounded-full bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-zinc-700 sm:inline-flex"
+            >
+                Get in touch
+            </a>
+        </div>
+    </nav>
+</header>

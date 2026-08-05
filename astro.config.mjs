@@ -6,7 +6,6 @@ import react from '@astrojs/react';
 
 import sitemap from '@astrojs/sitemap';
 
-// https://astro.build/config
 export default defineConfig({
   site: 'https://dousec.org',
   i18n: {

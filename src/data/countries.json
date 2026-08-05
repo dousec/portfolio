@@ -1,0 +1,66 @@
+[
+  {
+    "country": "Argentina",
+    "flag": "🇦🇷",
+    "cities": ["Buenos Aires"],
+    "coords": "34.60° S · 58.38° W",
+    "count": 1,
+    "lat": -34.6037,
+    "lng": -58.3816
+  },
+  {
+      "country": "Brasil",
+      "flag": "🇧🇷",
+      "cities": ["Sao Paulo"],
+      "coords": "15.83° S · 47.92° W",
+      "count": 1,
+      "lat": -15.8267,
+      "lng": -47.9218
+  },
+  {
+    "country": "Colombia",
+    "flag": "🇨🇴",
+    "cities": ["Bogotá"],
+    "coords": "4.71° N · 74.07° W",
+    "count": 1,
+    "lat": 4.711,
+    "lng": -74.0721
+  },
+  {
+    "country": "Ecuador",
+    "flag": "🇪🇨",
+    "cities": ["Guayaquil"],
+    "coords": "0.18° S · 78.47° W",
+    "count": 1,
+    "lat": -0.1807,
+    "lng": -78.4678
+  },
+  {
+    "country": "España",
+    "flag": "🇪🇸",
+    "cities": ["Madrid"],
+    "coords": "39.42° N · 3.70° W",
+    "count": 0,
+    "lat": 39.4168,
+    "lng": -4.7038
+  },
+  {
+    "country": "México",
+    "flag": "🇲🇽",
+    "cities": ["Puebla", "Aguascalientes"],
+    "coords": "19.43° N · 99.13° W",
+    "count": 2,
+    "lat": 19.4326,
+    "lng": -99.1332
+  },
+
+  {
+    "country": "Perú",
+    "flag": "🇵🇪",
+    "cities": ["Lima"],
+    "coords": "12.05° S · 77.04° W",
+    "count": 1,
+    "lat": -12.0464,
+    "lng": -77.0428
+  }
+]

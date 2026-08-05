@@ -1,0 +1,14 @@
+[
+  {
+    "label": "GitHub",
+    "handle": "@dousec",
+    "href": "https://github.com/dousec",
+    "icon": "github"
+  },
+  {
+    "label": "Forgejo (Private Git Server)",
+    "handle": "@dou",
+    "href": "https://git.dousec.org/dou",
+    "icon": "forgejo"
+  }
+]

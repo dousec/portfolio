@@ -3,19 +3,189 @@ import "@styles/global.css";
 
 interface Props {
     title: string;
+    description?: string;
+    image?: string;
+    imageAlt?: string;
+    type?: string;
+    noindex?: boolean;
+    jsonLd?: object | object[];
 }
 
-const { title } = Astro.props;
+const {
+    title,
+    description = "Freelance software developers in Latin America and Europe. You choose the developers, you set the price, we ship.",
+    image,
+    imageAlt,
+    type = "website",
+    noindex = false,
+    jsonLd,
+} = Astro.props;
+
+const site = Astro.site ?? new URL("https://dousec.org");
+const pathname = Astro.url.pathname;
+const locale = Astro.currentLocale as string;
+
+const defaultImages: Record<string, string> = {
+    en: "/og-image.png",
+    es: "/og-image-es.png",
+    pt: "/og-image-pt.png",
+};
+const defaultImageAlts: Record<string, string> = {
+    en: "Dou; software that ships. Priced by you.",
+    es: "Dou; software que se entrega. Precio fijado por ti.",
+    pt: "Dou; software que entrega. Preço definido por você.",
+};
+const ogImagePath = image ?? defaultImages[locale] ?? "/og-image.png";
+const ogImage = new URL(ogImagePath, site).href;
+const ogImageAlt =
+    imageAlt ??
+    defaultImageAlts[locale] ??
+    "Dou; software that ships. Priced by you.";
+
+const locales = ["en", "es", "pt"];
+const defaultLocale = "en";
+const localeMetadata: Record<string, { og: string }> = {
+    en: { og: "en_US" },
+    es: { og: "es_ES" },
+    pt: { og: "pt_BR" },
+};
+
+const segments = pathname.split("/").filter(Boolean);
+const isLocalized = segments.length > 0 && locales.includes(segments[0]);
+const baseSegments = isLocalized ? segments.slice(1) : segments;
+
+const localizedHref = (l: string) => {
+    const base = `/${baseSegments.join("/")}`;
+    const normalized = base === "/" ? "/" : `${base.replace(/\/$/, "")}/`;
+    return new URL(
+        l === defaultLocale ? normalized : `/${l}${normalized}`,
+        site,
+    ).href;
+};
+
+const url = localizedHref(locale);
+
+const currentOgLocale = localeMetadata[locale]?.og ?? "en_US";
+const alternateOgLocales = locales
+    .filter((l) => l !== locale)
+    .map((l) => localeMetadata[l].og);
+
+const ogType = type;
+
+const robots = noindex
+    ? "noindex, nofollow"
+    : "index, follow, max-image-preview:large, max-snippet:-1";
+
+const organization = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${site.href}#org`,
+    name: "Dou",
+    url: site.href,
+    logo: {
+        "@type": "ImageObject",
+        url: new URL("/assets/dou.png", site).href,
+        width: 1080,
+        height: 1080,
+    },
+    email: "contact@dousec.org",
+    description,
+    foundingDate: "2021",
+    sameAs: ["https://github.com/dousec", "https://git.dousec.org/dou"],
+};
+
+const website = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${site.href}#website`,
+    url: site.href,
+    name: "Dou",
+    inLanguage: ["en", "es", "pt"],
+    publisher: { "@id": `${site.href}#org` },
+};
+
+const extraSchema = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 
-<html lang={Astro.currentLocale}>
+<html lang={locale}>
     <head>
         <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+        <link rel="icon" href="/assets/favicon.ico" />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/assets/apple-touch-icon.png"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="generator" content={Astro.generator} />
+        <meta name="theme-color" content="#ffffff" />
+        <meta name="color-scheme" content="light" />
+        <meta name="author" content="Dou" />
+        <meta name="robots" content={robots} />
+        <meta name="description" content={description} />
+
         <title>Dou • {title}</title>
+
+        <link rel="canonical" href={url} />
+        {
+            locales.map((l) => (
+                <link rel="alternate" hreflang={l} href={localizedHref(l)} />
+            ))
+        }
+        <link
+            rel="alternate"
+            hreflang="x-default"
+            href={localizedHref(defaultLocale)}
+        />
+
+        <meta property="og:site_name" content="Dou" />
+        <meta property="og:title" content={`Dou • ${title}`} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content={ogType} />
+        <meta property="og:url" content={url} />
+        <meta property="og:locale" content={currentOgLocale} />
+        {
+            alternateOgLocales.map((ogLocale) => (
+                <meta property="og:locale:alternate" content={ogLocale} />
+            ))
+        }
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:image:secure_url" content={ogImage} />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={ogImageAlt} />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`Dou • ${title}`} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:image:alt" content={ogImageAlt} />
+
+        <script
+            type="application/ld+json"
+            set:html={JSON.stringify(organization)}
+        />
+        <script type="application/ld+json" set:html={JSON.stringify(website)} />
+        {
+            extraSchema.map((schema) => (
+                <script
+                    type="application/ld+json"
+                    set:html={JSON.stringify(schema)}
+                />
+            ))
+        }
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            import "@scripts/flag-emoji-polyfill";
+        </script>
     </head>
     <body>
         <slot />
