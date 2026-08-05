@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dousec.org/sitemap-index.xml
