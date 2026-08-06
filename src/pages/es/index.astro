@@ -35,19 +35,19 @@ const isExternal = (url: string) => /^https?:\/\//.test(url);
 const steps = [
     {
         title: "Cuéntanos tu proyecto",
-        desc: "¿Qué estás construyendo, cuándo se entrega, cuál es el presupuesto? Con dos párrafos basta, hablamos en humano.",
+        desc: "¿Qué construyes, cuándo se entrega, cuánto presupuesto? Dos párrafos bastan. Sin rodeos, directo al grano: hablamos en humano.",
     },
     {
-        title: "Conoce a tus desarrolladores",
-        desc: "Te emparejamos con las personas adecuadas. Nombres reales, perfiles reales, contactos reales. Tú eliges quién se une.",
+        title: "Conoce a los developers reales",
+        desc: "Nombres reales, perfiles reales, contactos reales. Nada de marcas humo: contratas personas, con nombre y cara, y tú decides quién juega.",
     },
     {
         title: "Tú fijas el precio",
-        desc: "Alcance fijo, tu presupuesto, sin sorpresas. Paga con PayPal, Wise, ACH, Takenos o Uglycash.",
+        desc: "Alcance fijo, tu número, cero sorpresas. ¿No nos da con tu número? Te lo decimos claro. Sin letra pequeña.",
     },
     {
-        title: "We ship. Tú te quedas con el upside.",
-        desc: "Demos semanales, propiedad total del código, desplegado y en vivo. El producto, el código y el beneficio son tuyos.",
+        title: "We ship. Tú te quedas con todo.",
+        desc: "Demos semanales, código 100% tuyo, live en producción. El producto, el código y la pasta: todo tuyo.",
     },
 ];
 
@@ -55,29 +55,29 @@ const teams = [
     {
         name: "Solo",
         tag: "Un desarrollador senior",
-        desc: "MVPs, landing pages, victorias rápidas. Un dev sharp, todo tuyo.",
+        desc: "MVPs, landing pages, victorias rápidas. Un dev sharp, listo para el knock out.",
         price: "$30-$70",
         badge: null,
     },
     {
         name: "Dúo",
         tag: "Frontend más backend",
-        desc: "Dos desarrolladores, un sprint, el doble de impulso. Hecho para plazos ajustados.",
+        desc: "Dos devs, un sprint, el doble de fuel. Hecho para fechas que no perdonan.",
         price: "$70-$140",
         badge: "El más elegido",
     },
     {
         name: "Trío",
         tag: "Producto completo en 4-8 semanas",
-        desc: "Diseño, frontend y backend. Todo el stack según tu calendario.",
+        desc: "Diseño, frontend y backend: el stack completo, a tu ritmo, sin excusas.",
         price: "$140-$300",
         badge: "Mejor relación calidad-precio",
     },
     {
         name: "Ejército",
         tag: "Cuatro o más desarrolladores",
-        desc: "¿Un lanzamiento grande con una fecha límite fija? Dinos la fecha y armamos el equipo.",
-        price: "from $300",
+        desc: "¿Lanzamiento grande con fecha dura? Di el día. Nosotros aparecemos con todo.",
+        price: "desde $300",
         badge: null,
     },
 ];
@@ -87,19 +87,19 @@ const payments = [
         name: "PayPal",
         icon: "paypal",
         glyph: null,
-        note: "Global, al instante, todo el mundo lo conoce.",
+        note: "Global, al instante. Todo el mundo lo usa.",
     },
     {
         name: "Wise",
         icon: "wise",
         glyph: null,
-        note: "Comisión por cambio de divisas que no te roba.",
+        note: "Comisión de cambio justa, sin costos ocultos.",
     },
     {
         name: "ACH",
         icon: null,
         glyph: "ACH",
-        note: "Transferencia bancaria local (país del desarrollador), simple.",
+        note: "Transferencia bancaria local, directa al dev. Simple, sin fricción.",
     },
     {
         name: "Takenos",
@@ -111,13 +111,13 @@ const payments = [
         name: "Uglycash",
         icon: null,
         glyph: "U",
-        note: "Energía de cash-app, vías cripto.",
+        note: "Energía cash-app, vías cripto. Paga como quieras.",
     },
 ];
 
 const quotes = [
     {
-        text: "Dou construyó nuestra aplicación de presupuestos en 2 meses, hasta el día de hoy sigue cumpliendo mis mejoras. Un B2B completo por el precio de regalo.",
+        text: "Dou construyó nuestra app de presupuestos en 2 meses y hasta hoy sigue cumpliendo con mis mejoras. Un B2B completo por un precio regalado.",
         who: "Oscar Feliu",
         role: "Fundador",
         org: "EvokaReformas",
@@ -151,27 +151,29 @@ const quotes = [
                 <h1
                     class="font-display text-[clamp(3.4rem,9vw,5.5rem)] leading-none tracking-tight text-zinc-900"
                 >
-                    Elige a los devs.
+                    Tú eliges a los devs.
                     <br />
-                    Elige el <Highlight client:visible>precio</Highlight>.
+                    Tú pones el <Highlight client:visible>precio</Highlight>.
                     <br />
                     We ship.
                 </h1>
                 <p
                     class="mt-7 max-w-xl text-md font-medium leading-snug text-zinc-800 sm:text-sm"
                 >
-                    Dou es un equipo de 8 desarrolladores freelance en Latam y
-                    Europa. Sin agencias, sin intermediarios, sin facturas
-                    infladas. Tú eliges quién construye tu proyecto, tú fijas el
-                    presupuesto y hablas directamente con los desarrolladores
-                    que hacen el trabajo.
+                    La mayoría de los proyectos de software te clavan dos veces:
+                    el freelance desaparece, la agencia infla la factura. Dou
+                    juega otra liga. {totalDevs} desarrolladores senior en Latam y
+                    Europa: sin account managers, sin intermediarios, sin facturas
+                    infladas. Tú eliges a las personas que construyen, tú pones el
+                    presupuesto y hablas directo con quien hace el trabajo. Sin
+                    vendedores. Sin juegos.
                 </p>
                 <div class="mt-9 flex flex-wrap items-center gap-4">
                     <a
                         href="#contact"
                         class="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-zinc-700"
                     >
-                        Consigue tu presupuesto gratis
+                        Reclama tu presupuesto gratis
                     </a>
                     <a
                         href="#team"
@@ -202,15 +204,8 @@ const quotes = [
                     >
                     </div>
                     <div
-                        class="relative overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-xl shadow-zinc-900/5"
+                        class="relative overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-xl shadow-zinc-900/5 min-h-120"
                     >
-                        <img
-                            src="/assets/dou.png"
-                            alt="Dou"
-                            class="aspect-square w-full object-cover"
-                            width="1080"
-                            height="1080"
-                        />
                     </div>
                     <div
                         class="glass absolute -bottom-5 -left-4 flex items-center gap-3 rounded-2xl px-4 py-3 sm:-left-8"
@@ -284,21 +279,21 @@ const quotes = [
         aria-labelledby="how-title"
     >
         <div class="mx-auto max-w-6xl">
-            <SectionLabel> 01 · Cómo funciona </SectionLabel>
+            <SectionLabel> 01 · El playbook </SectionLabel>
             <Reveal client:visible>
                 <h2
                     id="how-title"
                     class="max-w-3xl font-display text-3xl leading-[1.15] tracking-tight text-zinc-900 sm:text-5xl"
                 >
-                    {steps.length} pasos, <Highlight client:visible
-                        >nada</Highlight
-                    > oculto.
+                    {steps.length} pasos. <Highlight client:visible
+                        >Cero</Highlight
+                    > letra pequeña.
                 </h2>
             </Reveal>
             <Reveal client:visible delay={100}>
                 <p class="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-500">
-                    Sin anticipos, sin llamadas de ventas, sin letra pequeña.
-                    Este es todo el playbook.
+                    Sin retenedores, sin llamadas de ventas, sin sorpresas. Solo
+                    plan, precio y entrega. Así se hace dinero.
                 </p>
             </Reveal>
             <div class="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -348,14 +343,15 @@ const quotes = [
                         </span>
                         <div>
                             <h3 class="font-display text-2xl tracking-tight">
-                                Confianza en nuestro trabajo
+                                Skin in the game. De verdad.
                             </h3>
                             <p
                                 class="mt-2 max-w-xl text-sm leading-relaxed text-zinc-300"
                             >
-                                Alcance fijo, demos semanales, propiedad total
-                                del código. Si no cumplimos la fecha de entrega,
-                                el último proceso corre por nuestra cuenta.
+                                Alcance fijo, demos semanales, código 100% tuyo.
+                                ¿Se nos pasa la fecha? El último hito corre por
+                                nuestra cuenta. Que una agencia firme eso.
+                                Pruébanos.
                             </p>
                         </div>
                     </div>
@@ -376,7 +372,7 @@ const quotes = [
         aria-labelledby="team-title"
     >
         <div class="mx-auto max-w-7xl">
-            <SectionLabel> 02 · Elige tu equipo </SectionLabel>
+            <SectionLabel> 02 · Elige a tus jugadores </SectionLabel>
             <div class="flex flex-wrap items-end justify-between gap-6">
                 <Reveal client:visible>
                     <h2
@@ -390,9 +386,10 @@ const quotes = [
                 </Reveal>
                 <Reveal client:visible delay={100}>
                     <p class="max-w-sm text-base leading-relaxed text-zinc-500">
-                        Elige cuántos desarrolladores se suman a tu proyecto y
-                        dinos el presupuesto. Las agencias cobran $150-300 la
-                        hora más anticipos. Aquí decides tú.
+                        Las agencias te cuestan una fortuna: $150-300 la hora, más
+                        retenedores, y aun así hablas con un vendedor. Aquí
+                        volteamos la mesa: tú eliges a los devs, tú pones el
+                        número. Así de simple.
                     </p>
                 </Reveal>
             </div>
@@ -423,7 +420,7 @@ const quotes = [
                                     Típico · {t.price}
                                 </p>
                                 <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400">
-                                    Rate · you set it
+                                    Tarifa · tú la pones
                                 </p>
                                 <a
                                     href="#contact"
@@ -439,9 +436,9 @@ const quotes = [
             </div>
             <Reveal client:visible delay={200}>
                 <p class="mt-10 text-center font-mono text-xs text-zinc-500">
-                    Sin tarifa horaria fija. Nos dices el presupuesto y te
-                    decimos qué podemos entregar por ese dinero. That's the
-                    deal.
+                    ¿Tarifa horaria fija? Eso no es negocio. Tú pones el
+                    número, nosotros decimos qué se entrega. That's the deal.
+                    Punto.
                 </p>
             </Reveal>
         </div>
@@ -459,15 +456,13 @@ const quotes = [
                     id="pay-title"
                     class="max-w-3xl font-display text-3xl leading-[1.15] tracking-tight text-zinc-900 sm:text-5xl"
                 >
-                    Paga de la forma que <Highlight client:visible
-                        >te convenga</Highlight
-                    >.
+                    Tu dinero. <Highlight client:visible>Tu manera.</Highlight>
                 </h2>
             </Reveal>
             <Reveal client:visible delay={100}>
                 <p class="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-500">
                     PayPal, Wise, ACH, Takenos, Uglycash. Si tu dinero funciona,
-                    nosotros trabajamos. Take your pick.
+                    nosotros trabajamos. Así de simple. ¿A qué esperas?
                 </p>
             </Reveal>
             <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
@@ -509,14 +504,14 @@ const quotes = [
         aria-labelledby="receipts-title"
     >
         <div class="mx-auto max-w-5xl">
-            <SectionLabel> 04 · Lo que dicen los clientes </SectionLabel>
+            <SectionLabel> 04 · Los receipts </SectionLabel>
             <Reveal client:visible>
                 <h2
                     id="receipts-title"
                     class="max-w-3xl font-display text-3xl leading-[1.15] tracking-tight text-zinc-900 sm:text-5xl"
                 >
-                    No nos creas a nosotros. <Highlight client:visible
-                        >Créeles a ellos.</Highlight
+                    No confíes en nosotros. <Highlight client:visible
+                        >Confía en ellos.</Highlight
                     >
                 </h2>
             </Reveal>
@@ -637,8 +632,7 @@ const quotes = [
                     <p
                         class="mt-10 text-center font-mono text-xs text-zinc-500"
                     >
-                        La cifra de 20+ incluye código abierto, todo público en
-                        GitHub
+                        Código abierto incluido, todo público en GitHub
                     </p>
                 </div>
             </Reveal>
@@ -662,7 +656,7 @@ const quotes = [
                 class="pointer-events-none absolute inset-x-0 top-16 flex flex-wrap items-start justify-between gap-2 p-6 font-mono text-xs uppercase tracking-[0.3em] text-zinc-500 sm:top-20 sm:p-8"
             >
                 <span class="glass rounded-full px-3.5 py-1.5"
-                    >05 · Los desarrolladores</span
+                    >05 · Conoce a los developers</span
                 >
                 <span class="glass rounded-full px-3.5 py-1.5 text-zinc-700"
                     >{Countries.length} países · {totalDevs} desarrolladores</span
@@ -752,7 +746,7 @@ const quotes = [
         aria-labelledby="contact-title"
     >
         <div class="mx-auto max-w-6xl">
-            <SectionLabel> 06 · Hablemos </SectionLabel>
+            <SectionLabel> 06 · Hagamos un trato </SectionLabel>
             <div class="grid gap-14 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
                 <div>
                     <Reveal client:visible>
@@ -760,18 +754,19 @@ const quotes = [
                             id="contact-title"
                             class="font-display text-5xl leading-[1.05] tracking-tight text-zinc-900 sm:text-6xl"
                         >
-                            Listos cuando <Highlight client:visible
-                                >lo estés</Highlight
-                            >.
+                            La plata está sobre la mesa. <Highlight
+                                client:visible>¿Entras o no?</Highlight
+                            >
                         </h2>
                     </Reveal>
                     <Reveal client:visible delay={100}>
                         <p
                             class="mt-6 max-w-lg text-lg leading-relaxed text-zinc-500"
                         >
-                            Cuéntanos qué estás construyendo y cuánto te
-                            gustaría pagar. Respondemos en 24 horas, normalmente
-                            antes, con un plan y un precio que fijas tú.
+                            Dinos qué estás construyendo y cuánto quieres pagar.
+                            Respondemos en 24 horas, casi siempre antes, con un
+                            plan y un número que tú controlas. Sin juegos, sin
+                            letra pequeña.
                         </p>
                     </Reveal>
                     <Reveal client:visible delay={150}>
@@ -780,7 +775,7 @@ const quotes = [
                                 href="mailto:contact@dousec.org?subject=Solicitud%20de%20presupuesto%20para%20Dou&body=Hola%20Dou%2C%0A%0AEsto%20es%20lo%20que%20estoy%20construyendo%3A%0A%0A%0ARango%20de%20presupuesto%3A%0A%0AFecha%20l%C3%ADmite%3A%0A"
                                 class="group inline-flex items-center gap-3 rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-zinc-700"
                             >
-                                Consigue tu presupuesto gratis
+                                Reclama tu presupuesto gratis
                                 <ArrowRight />
                             </a>
                             <button
@@ -878,7 +873,8 @@ const quotes = [
                                 Desde
                             </p>
                             <p class="mt-2 text-sm text-zinc-600">
-                                Construyendo Software Open-Source y Privado desde 2021
+                                Construyendo Software Open-Source y Privado
+                                desde 2021
                             </p>
                         </div>
                     </div>
@@ -900,9 +896,9 @@ const quotes = [
                     <p
                         class="mt-3 max-w-xs text-sm leading-relaxed text-zinc-500"
                     >
-                        Un equipo de software freelance en Latam y Europa. Tú
-                        eliges a los desarrolladores, tú fijas el precio, we
-                        ship.
+                        Un equipo de software freelance en Latam y Europa. Sin
+                        agencias, sin intermediarios. Tú eliges a los devs, tú
+                        pones el precio, we ship.
                     </p>
                 </div>
                 <div>
