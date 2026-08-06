@@ -1,23 +1,23 @@
 ---
-import SitePage from "@layouts/SitePage.astro";
-import Navbar from "@components/Navbar.astro";
-import ProgressBar from "@components/ProgressBar";
-import Parallax from "@components/Parallax";
-import Reveal from "@components/Reveal";
-import Highlight from "@components/Highlight";
-import GlobeSpinner from "@components/GlobeSpinner";
+import SitePage from "@/layouts/SitePage.astro";
+import Navbar from "@/components/Navbar.astro";
+import ProgressBar from "@/components/ProgressBar";
+import Parallax from "@/components/Parallax";
+import Reveal from "@/components/Reveal";
+import Highlight from "@/components/Highlight";
+import GlobeSpinner from "@/components/GlobeSpinner";
 import {
     Carousel,
     CarouselContent,
     CarouselItem,
-} from "@components/starwind/carousel";
-import { Toaster } from "@components/starwind/toast";
-import Countries from "@data/countries.json";
-import Technologies from "@data/technologies.json";
-import Socials from "@data/socials.json";
-import { developers } from "@lib/developers";
-import SectionLabel from "@components/SectionLabel.astro";
-import ArrowRight from "@components/ArrowRight.astro";
+} from "@/components/starwind/carousel";
+import { Toaster } from "@/components/starwind/toast";
+import Countries from "@/data/countries.json";
+import Technologies from "@/data/technologies.json";
+import Socials from "@/data/socials.json";
+import { developers } from "@/lib/developers";
+import SectionLabel from "@/components/SectionLabel.astro";
+import ArrowRight from "@/components/ArrowRight.astro";
 
 const devicon = (slug: string) =>
     `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${slug}.svg`;
@@ -1005,12 +1005,12 @@ const quotes = [
 </script>
 
 <script>
-    import "@scripts/scroll-experience";
+    import "@/scripts/scroll-experience";
 </script>
 
 <script>
-    import { initCarousel } from "@components/starwind/carousel";
-    import { toast } from "@components/starwind/toast";
+    import { initCarousel } from "@/components/starwind/carousel";
+    import { toast } from "@/components/starwind/toast";
 
     const carouselRoot = document.querySelector<HTMLElement>(
         "#testimonial-carousel",

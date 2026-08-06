@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useLenisScroll } from '@hooks/useLenisScroll';
+import { useLenisScroll } from '@/hooks/useLenisScroll';
 
 export default function ProgressBar() {
   const barRef = useRef<HTMLDivElement>(null);

@@ -17,7 +17,7 @@ import {
 import { Html, OrbitControls, useTexture } from '@react-three/drei';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import * as THREE from 'three';
-import Countries from '@data/countries.json';
+import Countries from '@/data/countries.json';
 
 const originalWarn = console.warn;
 console.warn = (...args: unknown[]) => {

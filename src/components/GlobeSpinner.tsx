@@ -1,5 +1,5 @@
-import { useLenisScroll } from '@hooks/useLenisScroll';
-import GlobeScene from '@components/GlobeScene';
+import { useLenisScroll } from '@/hooks/useLenisScroll';
+import GlobeScene from '@/components/GlobeScene';
 
 export interface GlobeSpinnerProps {
   className?: string;
