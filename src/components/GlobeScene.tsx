@@ -213,7 +213,7 @@ interface EarthProps {
 }
 
 function Earth({ scrollProgress, hovered, onHover }: EarthProps) {
-  const earthMap = useTexture('/assets/textures/earth.jpg');
+  const earthMap = useTexture('/assets/textures/earth.webp');
   earthMap.colorSpace = THREE.SRGBColorSpace;
 
   const globeRef = useRef<THREE.Group>(null);
