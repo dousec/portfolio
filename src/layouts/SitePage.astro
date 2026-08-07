@@ -1,55 +1,49 @@
 ---
 import "@/styles/global.css";
 import { getAbsoluteLocaleUrl } from "astro:i18n";
+import { i18n } from "astro:config/client";
 
 interface Props {
     title: string;
-    description?: string;
+    description: string;
 }
 
 const { title, description } = Astro.props;
 
-const site = Astro.site ?? new URL("https://dousec.org");
-const locale = Astro.currentLocale as string;
+const site = Astro.site!;
+const { defaultLocale, locales } = i18n;
+const locale = Astro.currentLocale ?? defaultLocale;
+const url = getAbsoluteLocaleUrl(locale);
 
-const locales = ["en", "es", "pt"];
-const defaultLocale = "en";
-
-const localeMetadata: Record<
-    string,
-    { description: string; image: string; imageAlt: string; og: string }
-> = {
-    en: {
-        description:
-            "Freelance software developers in Latin America and Europe. You choose the developers, you set the price, we ship.",
-        image: "/og-image.png",
-        imageAlt: "Dou; software that ships. Priced by you.",
-        og: "en_US",
-    },
-    es: {
-        description:
-            "Desarrolladores de software freelance en Latinoamérica y Europa. Tú eliges a los desarrolladores, tú fijas el precio, nosotros entregamos.",
-        image: "/og-image-es.png",
-        imageAlt: "Dou; software que se entrega. Precio fijado por ti.",
-        og: "es_ES",
-    },
-    pt: {
-        description:
-            "Desenvolvedores de software freelance na América Latina e Europa. Você escolhe os desenvolvedores, define o preço e nós entregamos.",
-        image: "/og-image-pt.png",
-        imageAlt: "Dou; software que entrega. Preço definido por você.",
-        og: "pt_BR",
-    },
+const ogFor = (lang: string) => {
+    switch (lang) {
+        case "es":
+            return {
+                image: "/og-image-es.png",
+                alt: "Dou; software que se entrega. Precio fijado por ti.",
+                locale: "es_ES",
+            };
+        case "pt":
+            return {
+                image: "/og-image-pt.png",
+                alt: "Dou; software que entrega. Preço definido por você.",
+                locale: "pt_BR",
+            };
+        default:
+            return {
+                image: "/og-image.png",
+                alt: "Dou; software that ships. Priced by you.",
+                locale: "en_US",
+            };
+    }
 };
 
-const meta = localeMetadata[locale] ?? localeMetadata[defaultLocale];
-const metaDescription = description ?? meta.description;
-const url = getAbsoluteLocaleUrl(locale);
-const ogImage = new URL(meta.image, site).href;
-const ogImageAlt = meta.imageAlt;
+const og = ogFor(locale);
+const ogImage = new URL(og.image, site).href;
+const ogImageAlt = og.alt;
 const alternateOgLocales = locales
     .filter((l) => l !== locale)
-    .map((l) => localeMetadata[l].og);
+    .map((l) => ogFor(l).locale);
 
 const organization = {
     "@context": "https://schema.org",
@@ -64,7 +58,7 @@ const organization = {
         height: 1080,
     },
     email: "contact@dousec.org",
-    description: metaDescription,
+    description,
     foundingDate: "2021",
     sameAs: ["https://github.com/dousec", "https://git.dousec.org/dou"],
 };
@@ -100,7 +94,7 @@ const website = {
             name="robots"
             content="index, follow, max-image-preview:large, max-snippet:-1"
         />
-        <meta name="description" content={metaDescription} />
+        <meta name="description" content={description} />
 
         <title>Dou • {title}</title>
 
@@ -122,10 +116,10 @@ const website = {
 
         <meta property="og:site_name" content="Dou" />
         <meta property="og:title" content={`Dou • ${title}`} />
-        <meta property="og:description" content={metaDescription} />
+        <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
-        <meta property="og:locale" content={meta.og} />
+        <meta property="og:locale" content={og.locale} />
         {
             alternateOgLocales.map((ogLocale) => (
                 <meta property="og:locale:alternate" content={ogLocale} />
@@ -140,7 +134,7 @@ const website = {
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`Dou • ${title}`} />
-        <meta name="twitter:description" content={metaDescription} />
+        <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={ogImage} />
         <meta name="twitter:image:alt" content={ogImageAlt} />
 
