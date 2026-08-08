@@ -1,0 +1,33 @@
+---
+import Technologies from "@/data/technologies.json";
+import { devicon } from "@/lib/icons";
+---
+
+<div
+    class="relative overflow-hidden border-y border-zinc-200 bg-white py-5"
+>
+    <div
+        class="flex w-max animate-marquee whitespace-nowrap"
+        data-marquee
+        style="will-change: transform;"
+    >
+        {
+            [...Technologies, ...Technologies].map((t, i) => (
+                <span
+                    class="flex items-center gap-2.5 px-6 text-sm font-medium text-zinc-500"
+                    aria-hidden={i >= Technologies.length}
+                >
+                    <img
+                        src={devicon(t.icon)}
+                        alt=""
+                        class="h-5 w-5"
+                        width="128"
+                        height="128"
+                        loading="lazy"
+                    />
+                    {t.name}
+                </span>
+            ))
+        }
+    </div>
+</div>

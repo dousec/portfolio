@@ -1,17 +1,3 @@
-/**
- * Country flag emoji polyfill for browsers that can't render them.
- *
- * Windows and Chromium-based browsers render flag emojis (regional
- * indicators) as two-letter codes like "US" instead of an actual flag.
- * This script detects that and injects a self-hosted subset of the Twemoji
- * Mozilla color font ("Twemoji Country Flags", ~78KB woff2) — but only on
- * browsers that need it, so macOS/iOS/etc. keep their native flags.
- *
- * Adapted from talkjs/country-flag-emoji-polyfill (MIT)
- * https://github.com/talkjs/country-flag-emoji-polyfill
- * Font: https://github.com/mozilla/twemoji-colr (Twemoji, CC-BY 4.0)
- */
-
 const FONT_NAME = 'Twemoji Country Flags';
 const FONT_URL = '/fonts/TwemojiCountryFlags.woff2';
 

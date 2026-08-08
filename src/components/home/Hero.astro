@@ -1,0 +1,141 @@
+---
+import Parallax from "@/components/Parallax";
+import Highlight from "@/components/Highlight";
+import ArrowRight from "@/components/ArrowRight.astro";
+import TechMarquee from "./TechMarquee.astro";
+import type { HeroCopy } from "@/i18n/home";
+
+interface Props {
+    copy: HeroCopy;
+    totalDevs: number;
+    countries: number;
+}
+
+const { copy, totalDevs, countries } = Astro.props;
+
+const fillStats = (stat: string) =>
+    stat
+        .replaceAll("{devs}", String(totalDevs))
+        .replaceAll("{countries}", String(countries));
+---
+
+<section
+    id="top"
+    class="relative flex min-h-svh flex-col overflow-hidden pt-16"
+>
+    <div
+        class="hero-stack mx-auto grid w-full max-w-7xl flex-1 items-center gap-16 px-5 py-16 sm:px-8 lg:grid-cols-2 lg:gap-12"
+    >
+        <Parallax client:visible speed={0.15}>
+            <p
+                class="mb-6 font-mono text-xs uppercase tracking-[0.3em] text-zinc-500"
+            >
+                {copy.eyebrow}
+            </p>
+            <h1
+                class="font-display text-[clamp(3.4rem,9vw,5.5rem)] leading-none tracking-tight text-zinc-900"
+            >
+                {
+                    copy.lines.map((line, i) => (
+                        <Fragment>
+                            {line.pre}
+                            {line.highlight && (
+                                <Highlight client:visible>
+                                    {line.highlight}
+                                </Highlight>
+                            )}
+                            {line.post}
+                            {i < copy.lines.length - 1 && <br />}
+                        </Fragment>
+                    ))
+                }
+            </h1>
+            <p
+                class="mt-7 max-w-xl text-md font-medium leading-snug text-zinc-800 sm:text-sm"
+            >
+                {
+                    copy.description
+                        .replaceAll("{devs}", String(totalDevs))
+                        .replaceAll("{countries}", String(countries))
+                }
+            </p>
+            <div class="mt-9 flex flex-wrap items-center gap-4">
+                <a
+                    href="#contact"
+                    class="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-zinc-700"
+                >
+                    {copy.primaryCta}
+                </a>
+                <a
+                    href="#team"
+                    class="group inline-flex items-center gap-2 rounded-full border border-zinc-300 px-6 py-3 text-sm font-medium text-zinc-700 transition hover:border-zinc-900 hover:text-zinc-900"
+                >
+                    {copy.secondaryCta}
+                    <ArrowRight />
+                </a>
+            </div>
+            <p
+                class="mt-9 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-xs text-zinc-500"
+            >
+                {
+                    copy.stats.map((stat, i) => (
+                        <Fragment>
+                            <span>{fillStats(stat)}</span>
+                            {i < copy.stats.length - 1 && (
+                                <span class="text-zinc-300">·</span>
+                            )}
+                        </Fragment>
+                    ))
+                }
+            </p>
+        </Parallax>
+
+        <Parallax client:visible speed={0.25}>
+            <div class="relative mx-auto w-full max-w-md lg:max-w-none">
+                <div
+                    aria-hidden="true"
+                    class="dot-grid absolute -inset-5 rounded-[2.75rem] sm:-inset-7"
+                >
+                </div>
+                <div
+                    class="relative overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-xl shadow-zinc-900/5 min-h-120"
+                >
+                </div>
+                <div
+                    class="glass absolute -bottom-5 -left-4 flex items-center gap-3 rounded-2xl px-4 py-3 sm:-left-8"
+                >
+                    <div
+                        class="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-900"
+                    >
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="white"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path
+                                d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8m4 2v-2m0-8V6"
+                            ></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-mono text-[11px] text-zinc-900">
+                            {copy.card.title}
+                        </p>
+                        <p class="font-mono text-[10px] text-zinc-500">
+                            {copy.card.subtitle}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </Parallax>
+    </div>
+
+    <TechMarquee />
+</section>

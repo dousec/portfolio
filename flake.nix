@@ -131,8 +131,6 @@
                     };
                   };
                 };
-                # treefmt-nix's defaults only cover JS/TS/JSON/CSS; biome.json's
-                # `files.includes: ["**", ...]` also picks up HTML and Astro files.
                 includes = [
                   "*.js"
                   "*.jsx"

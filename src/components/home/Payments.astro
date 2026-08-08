@@ -1,0 +1,101 @@
+---
+import SectionLabel from "@/components/SectionLabel.astro";
+import Reveal from "@/components/Reveal";
+import Highlight from "@/components/Highlight";
+import { simpleicon } from "@/lib/icons";
+import type { PaymentsCopy } from "@/i18n/home";
+
+interface Props {
+    copy: PaymentsCopy;
+}
+
+const { copy } = Astro.props;
+---
+
+{
+    copy.label ? (
+        <section
+            id="pay"
+            class="relative px-5 py-28 sm:px-8 sm:py-36"
+            aria-labelledby="pay-title"
+        >
+            <div class="mx-auto max-w-6xl">
+                <SectionLabel>{copy.label}</SectionLabel>
+                <Reveal client:visible>
+                    <h2
+                        id="pay-title"
+                        class="max-w-3xl font-display text-3xl leading-[1.15] tracking-tight text-zinc-900 sm:text-5xl"
+                    >
+                        {copy.titlePre}<Highlight client:visible>{copy.titleHighlight}</Highlight>{copy.titlePost}
+                    </h2>
+                </Reveal>
+                <Reveal client:visible delay={100}>
+                    <p class="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-500">
+                        {copy.description}
+                    </p>
+                </Reveal>
+                <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                    {
+                        copy.payments.map((p, i) => (
+                            <Reveal client:visible delay={i * 70}>
+                                <div class="flex h-full flex-col items-start rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
+                                    {p.icon ? (
+                                        <img
+                                            src={simpleicon(p.icon)}
+                                            alt={p.name}
+                                            class="h-8 w-8 brightness-0"
+                                            width="32"
+                                            height="32"
+                                            loading="lazy"
+                                        />
+                                    ) : (
+                                        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-900 font-mono text-xs font-medium text-white">
+                                            {p.glyph}
+                                        </span>
+                                    )}
+                                    <h3 class="mt-4 text-base font-semibold tracking-tight text-zinc-900">
+                                        {p.name}
+                                    </h3>
+                                    <p class="mt-1.5 text-sm leading-relaxed text-zinc-500">
+                                        {p.note}
+                                    </p>
+                                </div>
+                            </Reveal>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+    ) : (
+        <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {
+                copy.payments.map((p, i) => (
+                    <Reveal client:visible delay={i * 70}>
+                        <div class="flex h-full flex-col items-start rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
+                            {p.icon ? (
+                                <img
+                                    src={simpleicon(p.icon)}
+                                    alt={p.name}
+                                    class="h-8 w-8 brightness-0"
+                                    width="32"
+                                    height="32"
+                                    loading="lazy"
+                                />
+                            ) : (
+                                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-900 font-mono text-xs font-medium text-white">
+                                    {p.glyph}
+                                </span>
+                            )}
+                            <h3 class="mt-4 text-base font-semibold tracking-tight text-zinc-900">
+                                {p.name}
+                            </h3>
+                            <p class="mt-1.5 text-sm leading-relaxed text-zinc-500">
+                                {p.note}
+                            </p>
+                        </div>
+                    </Reveal>
+                ))
+            }
+        </div>
+    )
+}

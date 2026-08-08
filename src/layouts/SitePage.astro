@@ -11,7 +11,10 @@ interface Props {
 const { title, description } = Astro.props;
 
 const site = Astro.site!;
-const { defaultLocale, locales } = i18n;
+const { defaultLocale, locales } = i18n as {
+    defaultLocale: string;
+    locales: string[];
+};
 const locale = Astro.currentLocale ?? defaultLocale;
 const url = getAbsoluteLocaleUrl(locale);
 
@@ -72,7 +75,6 @@ const website = {
     inLanguage: locales,
     publisher: { "@id": `${site.href}#org` },
 };
-
 ---
 
 <html lang={locale}>

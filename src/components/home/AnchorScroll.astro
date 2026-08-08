@@ -1,0 +1,23 @@
+---
+---
+
+<script>
+    document.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        const anchor = target.closest('a[href^="#"]');
+        if (!anchor) return;
+        const id = anchor.getAttribute("href")?.slice(1);
+        if (!id) return;
+        const el = document.getElementById(id);
+        if (!el) return;
+        event.preventDefault();
+        // @ts-expect-error lenis is attached to window by astro-lenis
+        const lenis = window.lenis;
+        if (lenis) {
+            lenis.scrollTo(el, { offset: -64, duration: 1.4 });
+        } else {
+            el.scrollIntoView({ behavior: "smooth" });
+        }
+    });
+</script>

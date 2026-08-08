@@ -48,10 +48,10 @@ const currentLanguage =
     class="fixed inset-x-0 top-0 z-50 border-b border-zinc-200/70 bg-white/85 backdrop-blur-md"
 >
     <nav
-        class="mx-auto grid h-16 max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-5 sm:px-8"
+        class="mx-auto grid h-16 max-w-7xl grid-cols-[auto_auto_1fr] items-center px-5 sm:px-8 md:grid-cols-[1fr_auto_1fr]"
         aria-label="Main"
     >
-        <div class="hidden items-center gap-1 sm:flex">
+        <div class="flex items-center gap-1">
             {
                 Socials.map((s) => (
                     <a
@@ -59,7 +59,7 @@ const currentLanguage =
                         target="_blank"
                         rel="noreferrer"
                         aria-label={s.label}
-                        class="flex h-9 w-9 items-center justify-center rounded-full text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-900"
+                        class="hidden h-9 w-9 items-center justify-center rounded-full text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-900 sm:flex"
                     >
                         <img
                             src={simpleicon(s.icon)}
@@ -177,7 +177,7 @@ const currentLanguage =
                 </DropdownContent>
             </Dropdown>
 
-            <Dropdown openOnHover={true} closeDelay={150}>
+            <Dropdown openOnHover={true} closeDelay={150} class="hidden md:block">
                 <DropdownTrigger
                     class="inline-flex items-center gap-1 rounded-full px-2 py-1.5 text-sm font-medium text-zinc-600 transition hover:bg-zinc-100 hover:text-zinc-900 focus-visible:ring-2 sm:px-3"
                 >
