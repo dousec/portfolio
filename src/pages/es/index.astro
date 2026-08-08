@@ -22,6 +22,7 @@ const totalDevs = Countries.reduce((sum, d) => sum + d.count, 0);
 
 const stripNumber = (label: string) => label.replace(/^\d+ · /, "");
 const railSections = [
+    { id: "#top", label: "Inicio" },
     { id: "#how", label: stripNumber(copy.how.label) },
     { id: "#team", label: stripNumber(copy.team.label) },
     { id: "#receipts", label: stripNumber(copy.receipts.label) },
