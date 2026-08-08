@@ -149,7 +149,7 @@ export const homeEn: HomeCopy = {
     card: { title: 'You set the price', subtitle: 'fixed scope · your budget' },
   },
   how: {
-    label: '01 · The playbook',
+    label: '02 · The playbook',
     titlePre: '{n} steps. ',
     titleHighlight: 'Zero',
     titlePost: ' fine print.',
@@ -176,7 +176,7 @@ export const homeEn: HomeCopy = {
     callout: null,
   },
   team: {
-    label: '02 · Pick your players',
+    label: '03 · Pick your players',
     titlePre: 'Your project. Your rules. ',
     titleHighlight: 'Your price.',
     titlePost: '',
@@ -223,7 +223,7 @@ export const homeEn: HomeCopy = {
     },
   },
   receipts: {
-    label: '03 · The receipts',
+    label: '04 · The receipts',
     titlePre: "Don't trust us. ",
     titleHighlight: 'Trust them.',
     titlePost: '',
@@ -244,13 +244,13 @@ export const homeEn: HomeCopy = {
   },
   teamMap: {
     ariaLabel: 'The developers · where we work',
-    badge: '04 · Meet the developers',
+    badge: '05 · Meet the developers',
     statBadge: '{countries} countries · {devs} developers',
     hint: 'drag the globe · keep scrolling',
     messageCta: 'Message the developers',
   },
   contact: {
-    label: "05 · Let's make a deal",
+    label: "06 · Let's make a deal",
     titlePre: 'Money on the table. ',
     titleHighlight: 'Are you in?',
     titlePost: '',
@@ -333,7 +333,7 @@ export const homeEs: HomeCopy = {
     },
   },
   how: {
-    label: '01 · El playbook',
+    label: '02 · El playbook',
     titlePre: '{n} pasos. ',
     titleHighlight: 'Cero',
     titlePost: ' letra pequeña.',
@@ -360,7 +360,7 @@ export const homeEs: HomeCopy = {
     callout: null,
   },
   team: {
-    label: '02 · Elige a tus jugadores',
+    label: '03 · Elige a tus jugadores',
     titlePre: 'Tu proyecto. Tus reglas. ',
     titleHighlight: 'Tu precio.',
     titlePost: '',
@@ -407,7 +407,7 @@ export const homeEs: HomeCopy = {
     },
   },
   receipts: {
-    label: '03 · Los receipts',
+    label: '04 · Los receipts',
     titlePre: 'No confíes en nosotros. ',
     titleHighlight: 'Confía en ellos.',
     titlePost: '',
@@ -428,13 +428,13 @@ export const homeEs: HomeCopy = {
   },
   teamMap: {
     ariaLabel: 'Los desarrolladores · dónde trabajamos',
-    badge: '04 · Conoce a los developers',
+    badge: '05 · Conoce a los developers',
     statBadge: '{countries} países · {devs} desarrolladores',
     hint: 'arrastra el globo · sigue bajando',
     messageCta: 'Escribe a los desarrolladores',
   },
   contact: {
-    label: '05 · Hagamos un trato',
+    label: '06 · Hagamos un trato',
     titlePre: 'La plata está sobre la mesa. ',
     titleHighlight: '¿Entras o no?',
     titlePost: '',
