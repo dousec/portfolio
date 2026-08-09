@@ -4,9 +4,9 @@ export const carousel = tv({
   base: 'starwind-carousel group/carousel relative',
 });
 
-export const carouselContent = tv({
-  base: 'overflow-hidden',
-});
+// export const carouselContent = tv({
+//   base: 'overflow-hidden',
+// });
 
 export const carouselContainer = tv({
   base: [
