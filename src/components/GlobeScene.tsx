@@ -194,15 +194,20 @@ function Marker({ location, hovered, onHover }: MarkerProps) {
   );
 }
 
+const GLOBE_VIEWPORT_FRACTION = 0.5;
+
 function ResponsiveScale({ children }: { children: ReactNode }) {
-  const sizeWidth = useThree((state) => state.size.width);
   const sizeHeight = useThree((state) => state.size.height);
   const viewportWidth = useThree((state) => state.viewport.width);
+
   const scale = useMemo(() => {
-    if (sizeWidth < 768) return 0.62;
-    const maxByHeight = (1 - 144 / sizeHeight) * (2.61 / 2.28);
-    return Math.min(viewportWidth / 2.2, Math.max(0.4, maxByHeight));
-  }, [sizeWidth, sizeHeight, viewportWidth]);
+    if (typeof window === 'undefined' || sizeHeight <= 0) return 0.62;
+    const maxByHeight =
+      (GLOBE_VIEWPORT_FRACTION * window.innerHeight * 2.61) / (2 * sizeHeight);
+    const maxByWidth = viewportWidth / 2.2;
+    return Math.min(maxByWidth, Math.max(0.4, maxByHeight));
+  }, [sizeHeight, viewportWidth]);
+
   return <group scale={scale}>{children}</group>;
 }
 
