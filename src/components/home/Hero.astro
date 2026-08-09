@@ -23,7 +23,7 @@ const fillStats = (stat: string) =>
     class="relative flex min-h-svh flex-col overflow-hidden pt-16"
 >
     <div
-        class="hero-stack mx-auto grid w-full max-w-7xl flex-1 items-center gap-16 px-5 py-16 sm:px-8 lg:grid-cols-2 lg:gap-12"
+        class="hero-stack mx-auto grid w-full max-w-7xl flex-1 items-center gap-16 px-5 pt-16 pb-4 sm:px-8 lg:grid-cols-2 lg:gap-12"
     >
         <div>
             <p
@@ -32,8 +32,7 @@ const fillStats = (stat: string) =>
             >
                 <span
                     class="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-zinc-900 motion-reduce:animate-none"
-                    aria-hidden="true"
-                ></span>
+                    aria-hidden="true"></span>
                 {copy.eyebrow}
             </p>
             <h1
@@ -65,7 +64,10 @@ const fillStats = (stat: string) =>
                         .replaceAll("{countries}", String(countries))
                 }
             </p>
-            <div class="hero-enter mt-9 flex flex-wrap items-center gap-4" style="animation-delay: 270ms">
+            <div
+                class="hero-enter mt-9 flex flex-wrap items-center gap-4"
+                style="animation-delay: 270ms"
+            >
                 <a
                     href="#contact"
                     class="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-zinc-700 active:scale-[0.97]"
@@ -102,7 +104,8 @@ const fillStats = (stat: string) =>
                 <div
                     aria-hidden="true"
                     class="animate-hero-breathe absolute -inset-12 rounded-full bg-zinc-400/25 blur-3xl motion-reduce:animate-none motion-reduce:opacity-30"
-                ></div>
+                >
+                </div>
                 <div
                     aria-hidden="true"
                     class="hero-enter dot-grid absolute -inset-5 rounded-[2.75rem] sm:-inset-7"
@@ -169,8 +172,7 @@ const fillStats = (stat: string) =>
         <span class="relative">
             <span
                 class="absolute -inset-2 animate-pulse-soft rounded-full bg-zinc-400/30 blur-lg motion-reduce:animate-none"
-                aria-hidden="true"
-            ></span>
+                aria-hidden="true"></span>
             <span
                 class="relative flex h-10 w-6 items-start justify-center overflow-hidden rounded-full border border-zinc-400/80 bg-white/60 p-1.5 backdrop-blur-sm transition-colors duration-300 group-hover:border-zinc-900"
             >
@@ -178,12 +180,6 @@ const fillStats = (stat: string) =>
                     class="h-2.5 w-1 animate-scroll-hint rounded-full bg-zinc-900/85 motion-reduce:animate-none motion-reduce:opacity-40"
                 ></span>
             </span>
-        </span>
-        <span class="relative h-10 w-px overflow-hidden rounded-full bg-zinc-200">
-            <span
-                class="absolute inset-x-0 top-0 h-3.5 animate-scroll-hint-line bg-gradient-to-b from-zinc-400 to-transparent motion-reduce:hidden"
-                aria-hidden="true"
-            ></span>
         </span>
     </a>
 

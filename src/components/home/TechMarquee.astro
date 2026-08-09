@@ -8,55 +8,54 @@ const spriteSymbols: string[] = [];
 const fallbackIcons: string[] = [];
 
 for (const t of Technologies) {
-  try {
-    const res = await fetch(devicon(t.icon));
-    if (!res.ok) {
-      fallbackIcons.push(t.icon);
-      continue;
+    try {
+        const res = await fetch(devicon(t.icon));
+        if (!res.ok) {
+            fallbackIcons.push(t.icon);
+            continue;
+        }
+        const text = await res.text();
+        if (text.length > MAX_SPRITE_SIZE) {
+            fallbackIcons.push(t.icon);
+            continue;
+        }
+        const match = text.match(/<svg[^>]*>([\s\S]*)<\/svg>/);
+        if (!match) {
+            fallbackIcons.push(t.icon);
+            continue;
+        }
+        const viewBox = text.match(/viewBox="([^"]+)"/)?.[1] ?? "0 0 128 128";
+        const prefix = `devicon-${t.icon.replace(/[^a-z0-9]/gi, "-")}-`;
+        const inner = match[1]
+            .replace(/\bid="([^"]+)"/g, (_m, id) => `id="${prefix}${id}"`)
+            .replace(
+                /(url\(#)([^)"']+)(\))/g,
+                (_m, p, id, q) => `${p}${prefix}${id}${q}`,
+            )
+            .replace(
+                /(xlink:href="#)([^"]+)(")/g,
+                (_m, p, id, q) => `${p}${prefix}${id}${q}`,
+            )
+            .replace(
+                /(href="#)([^"]+)(")/g,
+                (_m, p, id, q) => `${p}${prefix}${id}${q}`,
+            );
+        spriteSymbols.push(
+            `<symbol id="${prefix.slice(0, -1)}" viewBox="${viewBox}">${inner}</symbol>`,
+        );
+    } catch {
+        fallbackIcons.push(t.icon);
     }
-    const text = await res.text();
-    if (text.length > MAX_SPRITE_SIZE) {
-      fallbackIcons.push(t.icon);
-      continue;
-    }
-    const match = text.match(/<svg[^>]*>([\s\S]*)<\/svg>/);
-    if (!match) {
-      fallbackIcons.push(t.icon);
-      continue;
-    }
-    const viewBox = text.match(/viewBox="([^"]+)"/)?.[1] ?? "0 0 128 128";
-    const prefix = `devicon-${t.icon.replace(/[^a-z0-9]/gi, "-")}-`;
-    const inner = match[1]
-      .replace(/\bid="([^"]+)"/g, (_m, id) => `id="${prefix}${id}"`)
-      .replace(
-        /(url\(#)([^)"']+)(\))/g,
-        (_m, p, id, q) => `${p}${prefix}${id}${q}`,
-      )
-      .replace(
-        /(xlink:href="#)([^"]+)(")/g,
-        (_m, p, id, q) => `${p}${prefix}${id}${q}`,
-      )
-      .replace(
-        /(href="#)([^"]+)(")/g,
-        (_m, p, id, q) => `${p}${prefix}${id}${q}`,
-      );
-    spriteSymbols.push(
-      `<symbol id="${prefix.slice(0, -1)}" viewBox="${viewBox}">${inner}</symbol>`,
-    );
-  } catch {
-    fallbackIcons.push(t.icon);
-  }
 }
 
 const useSprite = spriteSymbols.length > 0;
 const sprite = spriteSymbols.join("");
 
-const iconId = (icon: string) =>
-  `devicon-${icon.replace(/[^a-z0-9]/gi, "-")}`;
+const iconId = (icon: string) => `devicon-${icon.replace(/[^a-z0-9]/gi, "-")}`;
 ---
 
 <div
-    class="relative overflow-hidden border-y border-zinc-200 bg-white py-5 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]"
+    class="relative overflow-hidden border-y border-zinc-200 bg-white py-5 mask-[linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]"
 >
     {
         useSprite && (
@@ -72,7 +71,7 @@ const iconId = (icon: string) =>
         )
     }
     <div
-        class="flex w-max animate-marquee whitespace-nowrap motion-reduce:animate-none hover:[animation-play-state:paused]"
+        class="flex w-max animate-marquee whitespace-nowrap motion-reduce:animate-none hover:paused"
         style="will-change: transform;"
     >
         {
@@ -81,28 +80,26 @@ const iconId = (icon: string) =>
                     class="flex items-center gap-2.5 px-6 text-sm font-medium text-zinc-500"
                     aria-hidden={i >= Technologies.length}
                 >
-                    {
-                        useSprite && !fallbackIcons.includes(t.icon) ? (
-                            <svg
-                                class="h-5 w-5"
-                                aria-hidden="true"
-                                focusable="false"
-                            >
-                                <use href={`#${iconId(t.icon)}`} />
-                            </svg>
-                        ) : (
-                            <img
-                                src={devicon(t.icon)}
-                                alt=""
-                                class="h-5 w-5"
-                                width="128"
-                                height="128"
-                                loading="lazy"
-                                decoding="async"
-                                fetchpriority="low"
-                            />
-                        )
-                    }
+                    {useSprite && !fallbackIcons.includes(t.icon) ? (
+                        <svg
+                            class="h-5 w-5"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <use href={`#${iconId(t.icon)}`} />
+                        </svg>
+                    ) : (
+                        <img
+                            src={devicon(t.icon)}
+                            alt=""
+                            class="h-5 w-5"
+                            width="128"
+                            height="128"
+                            loading="lazy"
+                            decoding="async"
+                            fetchpriority="low"
+                        />
+                    )}
                     {t.name}
                 </span>
             ))
