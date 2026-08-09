@@ -17,25 +17,50 @@ export default function AmbientBackground() {
       return;
     }
 
+    const progressFor = (y: number) => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      return max > 0 ? Math.min(Math.max(y / max, 0), 1) : 0;
+    };
+
     let raf = 0;
+    let pending = false;
     let last = -1;
 
-    const tick = () => {
+    const apply = () => {
+      pending = false;
       const w = window as Window & { lenis?: { scroll: number } };
       const y = w.lenis?.scroll ?? window.scrollY;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = max > 0 ? Math.min(Math.max(y / max, 0), 1) : 0;
-
+      const progress = progressFor(y);
       if (Math.abs(progress - last) > 0.0005) {
         last = progress;
         el.style.setProperty('--ambient-progress', progress.toFixed(4));
       }
-
-      raf = requestAnimationFrame(tick);
     };
 
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    const schedule = () => {
+      if (pending) return;
+      pending = true;
+      raf = requestAnimationFrame(apply);
+    };
+
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+
+    const lenis = (
+      window as Window & {
+        lenis?: { on?: (event: string, cb: () => void) => void };
+      }
+    ).lenis;
+    lenis?.on?.('scroll', schedule);
+
+    schedule();
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      lenis?.off?.('scroll', schedule);
+    };
   }, []);
 
   return (

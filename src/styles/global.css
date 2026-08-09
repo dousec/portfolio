@@ -200,7 +200,7 @@
   .ambient-glow {
     position: absolute;
     border-radius: 9999px;
-    filter: blur(80px);
+    filter: blur(56px);
     will-change: transform, opacity;
   }
 
@@ -320,10 +320,19 @@
     opacity: 1;
   }
 
+  .hero-stack > :first-child {
+    transform: translate3d(0, calc(var(--hero-scroll, 0) * -16vh), 0);
+    will-change: transform;
+  }
+
+  .hero-stack > :last-child {
+    transform: translate3d(0, calc(var(--hero-scroll, 0) * -27vh), 0);
+    will-change: transform;
+  }
+
   @media (max-width: 1023px) {
     .hero-stack > :first-child {
       opacity: calc(1 - var(--hero-scroll, 0) * 1.15);
-      will-change: opacity;
     }
   }
 
@@ -333,6 +342,12 @@
       transform: translate3d(0, calc(var(--hero-scroll, 0) * 56px), 0)
         scale(calc(1 - var(--hero-scroll, 0) * 0.04));
       will-change: opacity, transform;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .ambient-glow {
+      filter: blur(40px);
     }
   }
 }

@@ -1,5 +1,4 @@
 ---
-import Parallax from "@/components/Parallax";
 import Highlight from "@/components/Highlight";
 import ArrowRight from "@/components/ArrowRight.astro";
 import TechMarquee from "./TechMarquee.astro";
@@ -26,7 +25,7 @@ const fillStats = (stat: string) =>
     <div
         class="hero-stack mx-auto grid w-full max-w-7xl flex-1 items-center gap-16 px-5 py-16 sm:px-8 lg:grid-cols-2 lg:gap-12"
     >
-        <Parallax client:visible speed={0.15}>
+        <div>
             <p
                 class="mb-6 font-mono text-xs uppercase tracking-[0.3em] text-zinc-500"
             >
@@ -88,9 +87,9 @@ const fillStats = (stat: string) =>
                     ))
                 }
             </p>
-        </Parallax>
+        </div>
 
-        <Parallax client:visible speed={0.25}>
+        <div>
             <div class="relative mx-auto w-full max-w-md lg:max-w-none">
                 <div
                     aria-hidden="true"
@@ -134,7 +133,7 @@ const fillStats = (stat: string) =>
                     </div>
                 </div>
             </div>
-        </Parallax>
+        </div>
     </div>
 
     <TechMarquee />
