@@ -176,7 +176,7 @@ export const homeEn: HomeCopy = {
     callout: null,
   },
   team: {
-    label: '03 · Pick your players',
+    label: '03 · Pick your team',
     titlePre: 'Your project. Your rules. ',
     titleHighlight: 'Your price.',
     titlePost: '',
@@ -360,7 +360,7 @@ export const homeEs: HomeCopy = {
     callout: null,
   },
   team: {
-    label: '03 · Elige a tus jugadores',
+    label: '03 · Elige a tu equipo',
     titlePre: 'Tu proyecto. Tus reglas. ',
     titleHighlight: 'Tu precio.',
     titlePost: '',
