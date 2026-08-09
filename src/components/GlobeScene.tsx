@@ -194,7 +194,7 @@ function Marker({ location, hovered, onHover }: MarkerProps) {
   );
 }
 
-const GLOBE_VIEWPORT_FRACTION = 0.5;
+const GLOBE_VIEWPORT_FRACTION = 0.55;
 
 function ResponsiveScale({ children }: { children: ReactNode }) {
   const sizeHeight = useThree((state) => state.size.height);
