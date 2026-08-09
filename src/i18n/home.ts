@@ -34,6 +34,7 @@ export interface HeroCopy {
   primaryCta: string;
   secondaryCta: string;
   stats: string[];
+  scrollHint: string;
   card: { title: string; subtitle: string };
 }
 
@@ -146,6 +147,7 @@ export const homeEn: HomeCopy = {
       '+20 projects shipped',
       'replies within 24h',
     ],
+    scrollHint: 'scroll',
     card: { title: 'You set the price', subtitle: 'fixed scope · your budget' },
   },
   how: {
@@ -327,6 +329,7 @@ export const homeEs: HomeCopy = {
       '+20 proyectos entregados',
       'respuesta en 24 h',
     ],
+    scrollHint: 'desliza',
     card: {
       title: 'Tú fijas el precio',
       subtitle: 'alcance fijo · tu presupuesto',

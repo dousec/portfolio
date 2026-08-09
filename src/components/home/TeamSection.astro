@@ -38,7 +38,7 @@ const { copy } = Astro.props;
             {
                 copy.teams.map((t, i) => (
                     <Reveal client:visible delay={i * 80}>
-                        <article class="relative flex h-full flex-col rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg hover:shadow-zinc-900/5">
+                        <article class="relative flex h-full flex-col rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-zinc-900/15 hover:shadow-xl hover:shadow-zinc-900/10">
                             {t.badge && (
                                 <span class="absolute -top-3 right-5 rounded-full bg-zinc-900 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-white">
                                     {t.badge}
@@ -64,7 +64,7 @@ const { copy } = Astro.props;
                             </p>
                             <a
                                 href="#contact"
-                                class="group mt-4 inline-flex items-center justify-between gap-2 rounded-full bg-zinc-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-700"
+                                class="group mt-4 inline-flex items-center justify-between gap-2 rounded-full bg-zinc-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-700 active:scale-[0.97]"
                             >
                                 {copy.card.buildPrefix} {i + 1} {i ? "devs" : "dev"}
                                 <ArrowRight />

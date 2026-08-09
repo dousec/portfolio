@@ -37,7 +37,7 @@ const { copy } = Astro.props;
                             <li>
                                 <a
                                     href={l.href}
-                                    class="text-zinc-600 transition hover:text-zinc-900"
+                                    class="link-underline inline-block text-zinc-600 transition hover:text-zinc-900"
                                 >
                                     {l.label}
                                 </a>
@@ -60,7 +60,7 @@ const { copy } = Astro.props;
                                     href={s.href}
                                     target="_blank"
                                     rel="noreferrer"
-                                    class="text-zinc-600 transition hover:text-zinc-900"
+                                    class="link-underline inline-block text-zinc-600 transition hover:text-zinc-900"
                                 >
                                     {s.label}
                                 </a>
@@ -81,7 +81,7 @@ const { copy } = Astro.props;
             </p>
             <a
                 href="#top"
-                class="flex items-center gap-2 transition hover:text-zinc-900"
+                class="group flex items-center gap-2 transition hover:text-zinc-900"
             >
                 {copy.backToTop}
                 <svg
@@ -93,6 +93,7 @@ const { copy } = Astro.props;
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
+                    class="transition-transform duration-300 group-hover:-translate-y-0.5"
                     aria-hidden="true"
                 >
                     <path d="M12 19V5m0 0-6 6m6-6 6 6"></path>

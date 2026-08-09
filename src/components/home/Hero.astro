@@ -27,12 +27,18 @@ const fillStats = (stat: string) =>
     >
         <div>
             <p
-                class="mb-6 font-mono text-xs uppercase tracking-[0.3em] text-zinc-500"
+                class="hero-enter mb-6 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.3em] text-zinc-500"
+                style="animation-delay: 0ms"
             >
+                <span
+                    class="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-zinc-900 motion-reduce:animate-none"
+                    aria-hidden="true"
+                ></span>
                 {copy.eyebrow}
             </p>
             <h1
-                class="font-display text-[clamp(3.4rem,9vw,5.5rem)] leading-none tracking-tight text-zinc-900"
+                class="hero-enter font-display text-[clamp(3.4rem,9vw,5.5rem)] leading-none tracking-tight text-zinc-900"
+                style="animation-delay: 90ms"
             >
                 {
                     copy.lines.map((line, i) => (
@@ -50,7 +56,8 @@ const fillStats = (stat: string) =>
                 }
             </h1>
             <p
-                class="mt-7 max-w-xl text-md font-medium leading-snug text-zinc-800 sm:text-sm"
+                class="hero-enter mt-7 max-w-xl text-md font-medium leading-snug text-zinc-800 sm:text-sm"
+                style="animation-delay: 180ms"
             >
                 {
                     copy.description
@@ -58,23 +65,24 @@ const fillStats = (stat: string) =>
                         .replaceAll("{countries}", String(countries))
                 }
             </p>
-            <div class="mt-9 flex flex-wrap items-center gap-4">
+            <div class="hero-enter mt-9 flex flex-wrap items-center gap-4" style="animation-delay: 270ms">
                 <a
                     href="#contact"
-                    class="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-zinc-700"
+                    class="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-zinc-700 active:scale-[0.97]"
                 >
                     {copy.primaryCta}
                 </a>
                 <a
                     href="#team-map"
-                    class="group inline-flex items-center gap-2 rounded-full border border-zinc-300 px-6 py-3 text-sm font-medium text-zinc-700 transition hover:border-zinc-900 hover:text-zinc-900"
+                    class="group inline-flex items-center gap-2 rounded-full border border-zinc-300 px-6 py-3 text-sm font-medium text-zinc-700 transition hover:border-zinc-900 hover:text-zinc-900 active:scale-[0.97]"
                 >
                     {copy.secondaryCta}
                     <ArrowRight />
                 </a>
             </div>
             <p
-                class="mt-9 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-xs text-zinc-500"
+                class="hero-enter mt-9 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-xs text-zinc-500"
+                style="animation-delay: 360ms"
             >
                 {
                     copy.stats.map((stat, i) => (
@@ -93,48 +101,91 @@ const fillStats = (stat: string) =>
             <div class="relative mx-auto w-full max-w-md lg:max-w-none">
                 <div
                     aria-hidden="true"
-                    class="dot-grid absolute -inset-5 rounded-[2.75rem] sm:-inset-7"
+                    class="animate-hero-breathe absolute -inset-12 rounded-full bg-zinc-400/25 blur-3xl motion-reduce:animate-none motion-reduce:opacity-30"
+                ></div>
+                <div
+                    aria-hidden="true"
+                    class="hero-enter dot-grid absolute -inset-5 rounded-[2.75rem] sm:-inset-7"
+                    style="animation-delay: 140ms"
                 >
                 </div>
                 <div
-                    class="relative overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-xl shadow-zinc-900/5 min-h-120"
+                    class="hero-enter relative overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-xl shadow-zinc-900/5 min-h-120"
+                    style="animation-delay: 240ms"
                 >
                 </div>
                 <div
-                    class="glass absolute -bottom-5 -left-4 flex items-center gap-3 rounded-2xl px-4 py-3 sm:-left-8"
+                    class="hero-enter glass absolute -bottom-5 -left-4 rounded-2xl sm:-left-8"
+                    style="animation-delay: 340ms"
                 >
                     <div
-                        class="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-900"
+                        class="animate-hero-float flex items-center gap-3 rounded-2xl px-4 py-3 motion-reduce:animate-none"
                     >
-                        <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="white"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true"
+                        <div
+                            class="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-900"
                         >
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path
-                                d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8m4 2v-2m0-8V6"
-                            ></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="font-mono text-[11px] text-zinc-900">
-                            {copy.card.title}
-                        </p>
-                        <p class="font-mono text-[10px] text-zinc-500">
-                            {copy.card.subtitle}
-                        </p>
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="white"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path
+                                    d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8m4 2v-2m0-8V6"
+                                ></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="font-mono text-[11px] text-zinc-900">
+                                {copy.card.title}
+                            </p>
+                            <p class="font-mono text-[10px] text-zinc-500">
+                                {copy.card.subtitle}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <a
+        href="#how"
+        class="scroll-hint hero-enter group relative z-10 flex flex-col items-center gap-3 pb-8"
+        style="animation-delay: 500ms"
+        aria-label={copy.scrollHint}
+    >
+        <span
+            class="animate-scroll-hint-label font-mono text-[10px] uppercase tracking-[0.45em] text-zinc-500 transition-colors duration-300 group-hover:text-zinc-900 motion-reduce:animate-none motion-reduce:opacity-60"
+        >
+            {copy.scrollHint}
+        </span>
+        <span class="relative">
+            <span
+                class="absolute -inset-2 animate-pulse-soft rounded-full bg-zinc-400/30 blur-lg motion-reduce:animate-none"
+                aria-hidden="true"
+            ></span>
+            <span
+                class="relative flex h-10 w-6 items-start justify-center overflow-hidden rounded-full border border-zinc-400/80 bg-white/60 p-1.5 backdrop-blur-sm transition-colors duration-300 group-hover:border-zinc-900"
+            >
+                <span
+                    class="h-2.5 w-1 animate-scroll-hint rounded-full bg-zinc-900/85 motion-reduce:animate-none motion-reduce:opacity-40"
+                ></span>
+            </span>
+        </span>
+        <span class="relative h-10 w-px overflow-hidden rounded-full bg-zinc-200">
+            <span
+                class="absolute inset-x-0 top-0 h-3.5 animate-scroll-hint-line bg-gradient-to-b from-zinc-400 to-transparent motion-reduce:hidden"
+                aria-hidden="true"
+            ></span>
+        </span>
+    </a>
 
     <TechMarquee />
 </section>

@@ -45,7 +45,7 @@ const { copy } = Astro.props;
                     <div class="mt-9 flex flex-wrap items-center gap-4">
                         <a
                             href={copy.mailtoHref}
-                            class="group inline-flex items-center gap-3 rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-zinc-700"
+                            class="group inline-flex items-center gap-3 rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-zinc-700 active:scale-[0.97]"
                         >
                             {copy.primaryCta}
                             <ArrowRight />
@@ -55,7 +55,7 @@ const { copy } = Astro.props;
                             data-copy-email
                             data-copy-success={copy.copySuccess}
                             data-copy-error={copy.copyError}
-                            class="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-6 py-3 text-sm font-medium text-zinc-700 transition hover:border-zinc-900 hover:text-zinc-900"
+                            class="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-6 py-3 text-sm font-medium text-zinc-700 transition hover:border-zinc-900 hover:text-zinc-900 active:scale-[0.97]"
                         >
                             <svg
                                 width="14"

@@ -56,7 +56,7 @@ const iconId = (icon: string) =>
 ---
 
 <div
-    class="relative overflow-hidden border-y border-zinc-200 bg-white py-5"
+    class="relative overflow-hidden border-y border-zinc-200 bg-white py-5 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]"
 >
     {
         useSprite && (
@@ -72,7 +72,7 @@ const iconId = (icon: string) =>
         )
     }
     <div
-        class="flex w-max animate-marquee whitespace-nowrap motion-reduce:animate-none"
+        class="flex w-max animate-marquee whitespace-nowrap motion-reduce:animate-none hover:[animation-play-state:paused]"
         style="will-change: transform;"
     >
         {
