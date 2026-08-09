@@ -11,14 +11,12 @@ import CarouselNext from './CarouselNext.astro';
 import CarouselPrevious from './CarouselPrevious.astro';
 import {
   carousel,
-  carouselContent,
   carouselItem,
   carouselNext,
   carouselPrevious,
 } from './variants';
 const CarouselVariants = {
   carousel,
-  carouselContent,
   carouselItem,
   carouselNext,
   carouselPrevious,
